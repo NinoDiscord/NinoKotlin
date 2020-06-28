@@ -48,3 +48,7 @@ application {
     // Define the main class for the application.
     mainClassName = "dev.augu.nino.AppKt"
 }
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
