@@ -6,7 +6,8 @@
 
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    kotlin("jvm") version "1.3.71"
+    kotlin("jvm") version "1.3.72"
+    kotlin("plugin.serialization") version "1.3.72"
 
     // Apply the application plugin to add support for building a CLI application.
     application
@@ -20,33 +21,78 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation(kotlin("stdlib-jdk8"))
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.3.7")
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor", "1.3.7")
+    val kotlinVersion = "1.3.72"
+    val kotlinxSerializationVersion = "0.20.0"
+    val kotlinxCoroutinesVersion = "1.3.8"
+
+    implementation(kotlin("stdlib", version = kotlinVersion))
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-runtime", kotlinxSerializationVersion) // JVM dependency
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", kotlinxCoroutinesVersion)
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor", kotlinxCoroutinesVersion)
+
+    // Serialization
+    val kamlVersion = "0.18.1"
+
+    implementation("com.charleskorn.kaml", "kaml", kamlVersion)
+
+
+    // Dependency Injection
+    val koinVersion = "2.1.6"
+
+    implementation("org.koin", "koin-core", koinVersion)
 
     // JDA
-    implementation("net.dv8tion", "JDA", "4.1.1_165") {
+    val jdaVersion = "4.2.0_181"
+    val jdaReactorVersion = "1.2.0"
+    val butterflyVersion = "0.1.1"
+
+    implementation("net.dv8tion", "JDA", jdaVersion) {
         exclude(module = "opus-java")
     }
-    implementation("club.minnced", "jda-reactor", "1.1.0")
-    implementation("dev.augu.nino", "Butterfly","0.1.1")
+    implementation("club.minnced", "jda-reactor", jdaReactorVersion)
+    implementation("dev.augu.nino", "Butterfly", butterflyVersion)
 
     // Testing tools
-    testImplementation("junit", "junit", "4.12")
-    testImplementation("io.kotest", "kotest-runner-junit5-jvm", "4.1.0.RC2")
-    testImplementation("io.kotest", "kotest-assertions-core-jvm", "4.1.0.RC2")
-    testImplementation("io.kotest", "kotest-property-jvm", "4.1.0.RC2")
-    testImplementation("io.mockk", "mockk", "1.10.0")
-    testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", "1.3.7")
+    val junitVersion = "5.6.2"
+    val kotestVersion = "4.1.3"
+    val mockkVersion = "1.10.0"
+
+    testImplementation("junit", "junit", junitVersion)
+    testImplementation("io.kotest", "kotest-runner-junit5-jvm", kotestVersion)
+    testImplementation("io.kotest", "kotest-assertions-core-jvm", kotestVersion)
+    testImplementation("io.kotest", "kotest-property-jvm", kotestVersion)
+    testImplementation("io.mockk", "mockk", mockkVersion)
+    testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", kotlinxCoroutinesVersion)
+    testImplementation("org.koin", "koin-test", koinVersion)
 
     // Logging
-    api("org.slf4j", "slf4j-api", "1.6.1")
-    testImplementation("org.slf4j", "slf4j-simple", "1.6.1")
+    val slf4jVersion = "1.7.28"
+    api("org.slf4j", "slf4j-api", slf4jVersion)
+    implementation("org.slf4j", "slf4j-simple", slf4jVersion)
 }
 
 application {
     // Define the main class for the application.
     mainClassName = "dev.augu.nino.AppKt"
+    java {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+tasks {
+    compileKotlin {
+        sourceSets {
+            main {
+                resources {
+                    srcDir("src")
+                }
+            }
+        }
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_11.toString()
+        }
+    }
 }
 
 tasks.withType<Test> {

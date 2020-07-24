@@ -1,0 +1,10 @@
+name: "English (US)"
+code: "en_US"
+flag: ":flag-us:"
+coverage: "100"
+contributors:
+  - "Oded Shapira"
+translations:
+  # Commands
+  pingCommandOldMessage: "Calculating..."
+  pingCommandNewMessage: "Shard ${id}: WS - ${shard}ms, Latency: ${messageLatency}ms"

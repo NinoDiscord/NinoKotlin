@@ -1,0 +1,9 @@
+base:
+  token: TOKEN
+  owners:
+    - ownerid1
+    - ownerid2
+  prefixes:
+    - x!
+    - nino!
+  defaultLanguage: en_US
