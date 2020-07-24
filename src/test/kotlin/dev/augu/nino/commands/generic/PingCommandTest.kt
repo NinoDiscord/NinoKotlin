@@ -17,7 +17,7 @@ class PingCommandTest : DescribeSpec({
         val cmd = spyk(PingCommand())
         val language = I18nLanguage(mapOf(
                 "pingCommandOldMessage" to "Calculating...",
-                "pingCommandMessage" to "Shard \${id} | Ping: \${messageLatency}ms | Websocket: \${shard}ms"
+                "pingCommandNewMessage" to "Shard \${id} | Ping: \${messageLatency}ms | Websocket: \${shard}ms"
         ))
 
         it("should print the latency") {

@@ -53,7 +53,7 @@ dependencies {
     implementation("dev.augu.nino", "Butterfly", butterflyVersion)
 
     // Testing tools
-    val junitVersion = "5.6.2"
+    val junitVersion = "4.13"
     val kotestVersion = "4.1.3"
     val mockkVersion = "1.10.0"
 
