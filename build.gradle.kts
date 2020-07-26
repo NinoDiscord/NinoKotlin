@@ -21,54 +21,37 @@ repositories {
 
 dependencies {
     // Kotlin
-    val kotlinVersion = "1.3.72"
-    val kotlinxSerializationVersion = "0.20.0"
-    val kotlinxCoroutinesVersion = "1.3.8"
-
-    implementation(kotlin("stdlib", version = kotlinVersion))
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-runtime", kotlinxSerializationVersion) // JVM dependency
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", kotlinxCoroutinesVersion)
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor", kotlinxCoroutinesVersion)
+    implementation(kotlin("stdlib", version = "1.3.72"))
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-runtime", "0.20.0") // JVM dependency
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.3.8")
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor", "1.3.8")
 
     // Serialization
-    val kamlVersion = "0.18.1"
-
-    implementation("com.charleskorn.kaml", "kaml", kamlVersion)
+    implementation("com.charleskorn.kaml", "kaml", "0.18.1")
 
 
     // Dependency Injection
-    val koinVersion = "2.1.6"
-
-    implementation("org.koin", "koin-core", koinVersion)
+    implementation("org.koin", "koin-core", "2.1.6")
 
     // JDA
-    val jdaVersion = "4.2.0_181"
-    val jdaReactorVersion = "1.2.0"
-    val butterflyVersion = "0.1.1"
-
-    implementation("net.dv8tion", "JDA", jdaVersion) {
+    implementation("net.dv8tion", "JDA", "4.2.0_181") {
         exclude(module = "opus-java")
     }
-    implementation("club.minnced", "jda-reactor", jdaReactorVersion)
-    implementation("dev.augu.nino", "Butterfly", butterflyVersion)
+    implementation("club.minnced", "jda-reactor", "1.2.0")
+    implementation("dev.augu.nino", "Butterfly", "0.2.0")
 
     // Testing tools
-    val junitVersion = "4.13"
-    val kotestVersion = "4.1.3"
-    val mockkVersion = "1.10.0"
-
-    testImplementation("junit", "junit", junitVersion)
-    testImplementation("io.kotest", "kotest-runner-junit5-jvm", kotestVersion)
-    testImplementation("io.kotest", "kotest-assertions-core-jvm", kotestVersion)
-    testImplementation("io.kotest", "kotest-property-jvm", kotestVersion)
-    testImplementation("io.mockk", "mockk", mockkVersion)
-    testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", kotlinxCoroutinesVersion)
-    testImplementation("org.koin", "koin-test", koinVersion)
+    testImplementation("junit", "junit", "4.13")
+    testImplementation("io.kotest", "kotest-runner-junit5-jvm", "4.1.3")
+    testImplementation("io.kotest", "kotest-assertions-core-jvm", "4.1.3")
+    testImplementation("io.kotest", "kotest-property-jvm", "4.1.3")
+    testImplementation("io.mockk", "mockk", "1.10.0")
+    testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", "1.3.8")
+    testImplementation("org.koin", "koin-test", "2.1.6")
 
     // Logging
-    val slf4jVersion = "1.7.28"
-    api("org.slf4j", "slf4j-api", slf4jVersion)
-    implementation("org.slf4j", "slf4j-simple", slf4jVersion)
+    api("org.slf4j", "slf4j-api", "1.7.28")
+    implementation("org.slf4j", "slf4j-simple", "1.7.28")
 }
 
 application {
