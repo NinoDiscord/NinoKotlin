@@ -19,18 +19,10 @@ import org.koin.core.inject
 import org.slf4j.LoggerFactory
 import java.io.File
 
-
-class App {
-    val greeting: String
-        get() {
-            return "Hello world."
-        }
-}
-
 class Bot : KoinComponent {
     private val client: ButterflyClient by inject()
     private val config: Configuration by inject()
-    val logger = LoggerFactory.getLogger(javaClass)
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     init {
         val commands = getKoin().getAll<Command>()
@@ -60,11 +52,11 @@ fun main(args: Array<String>) {
         if (File("/etc/nino.properties").exists()) {
             fileProperties("/etc/nino.properties")
         }
+
         environmentProperties()
         modules(*commonModules.toTypedArray(), *commandModules.toTypedArray(), serviceModule, configurationModule)
-
     }
-    println(App().greeting)
+
     val bot = Bot()
     bot.startBot()
 }

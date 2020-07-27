@@ -16,7 +16,7 @@ val discordModule = module {
         val config: Configuration = get()
         val client = ButterflyClient(
                 get(), // JDA
-                config.base.owners.first(), // Owners (butterfly currently supports one, this will be changed)
+                config.base.owners.toTypedArray(),
                 defaultLanguage = locales
                         .filter { it.code == config.base.defaultLanguage }
                         .map { it.toLanguage() }
