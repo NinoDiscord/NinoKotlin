@@ -19,6 +19,13 @@ import org.koin.core.inject
 import org.slf4j.LoggerFactory
 import java.io.File
 
+class App {
+    val greeting: String
+        get() {
+            return "Hello world."
+        }
+}
+
 class Bot : KoinComponent {
     private val client: ButterflyClient by inject()
     private val config: Configuration by inject()
