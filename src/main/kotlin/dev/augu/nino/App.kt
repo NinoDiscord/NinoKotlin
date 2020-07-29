@@ -16,6 +16,7 @@ import kotlinx.serialization.ImplicitReflectionSerializer
 import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.inject
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 
@@ -29,7 +30,7 @@ class App {
 class Bot : KoinComponent {
     private val client: ButterflyClient by inject()
     private val config: Configuration by inject()
-    private val logger = LoggerFactory.getLogger(javaClass)
+    private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
     init {
         val commands = getKoin().getAll<Command>()

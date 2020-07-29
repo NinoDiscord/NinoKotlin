@@ -29,6 +29,12 @@ dependencies {
     // Serialization
     implementation("com.charleskorn.kaml", "kaml", "0.18.1")
 
+    // Database
+    implementation("com.impossibl.pgjdbc-ng", "pgjdbc-ng", "0.8.3")
+    implementation("org.jetbrains.exposed", "exposed-core", "0.24.1")
+    implementation("org.jetbrains.exposed", "exposed-dao", "0.24.1")
+    implementation("org.jetbrains.exposed", "exposed-jdbc", "0.24.1")
+
 
     // Dependency Injection
     implementation("org.koin", "koin-core", "2.1.6")
