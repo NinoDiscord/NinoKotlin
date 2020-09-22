@@ -1,11 +1,11 @@
-package dev.augu.nino.commands.generic
+package dev.augu.nino.common.entities
 
 import dev.augu.nino.butterfly.command.Command
 
-abstract class GenericCommand(name: String, description: String, vararg aliases: String, userPermissions: Long = 0, botPermissions: Long = 0)
+abstract class ModerationCommand(name: String, description: String, vararg aliases: String, userPermissions: Long = 0, botPermissions: Long = 0)
     : Command(
         name,
-        "generic",
+        "moderation",
         *aliases,
         description = description,
         userPermissions = userPermissions,

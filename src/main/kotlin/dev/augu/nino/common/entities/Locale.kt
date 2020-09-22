@@ -1,8 +1,9 @@
 package dev.augu.nino.common.entities
 
-import com.charleskorn.kaml.Yaml
 import dev.augu.nino.butterfly.i18n.I18nLanguage
 import kotlinx.serialization.Serializable
+import com.charleskorn.kaml.Yaml
+
 import java.io.File
 
 @Serializable

@@ -1,9 +1,10 @@
 name: "English (US)"
 code: "en_US"
-flag: ":flag-us:"
+flag: ":flag_us:"
 coverage: "100"
 contributors:
-  - "Oded Shapira"
+  - "dondish#8071"
+  - "August#5820"
 translations:
   # Commands
   pingCommandOldMessage: "Calculating..."
