@@ -2,8 +2,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("com.github.johnrengelman.shadow") version "6.0.0"
-    kotlin("plugin.serialization") version "1.4.0"
-    kotlin("jvm") version "1.4.0"
+    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("jvm") version "1.4.10"
     application
 }
 
@@ -18,36 +18,35 @@ repositories {
 
 dependencies {
     // Kotlin
-    implementation(kotlin("stdlib", version = "1.3.72"))
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-runtime", "0.20.0") // JVM dependency
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.3.8")
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactor", "1.3.8")
+    implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.3.9")
 
     // Serialization
-    implementation("com.charleskorn.kaml", "kaml", "0.18.1")
+    implementation("com.charleskorn.kaml:kaml:0.23.0")
 
     // Dependency Injection
-    implementation("org.koin", "koin-core", "2.1.6")
+    implementation("org.koin:koin-core:2.1.6")
 
     // JDA
-    implementation("net.dv8tion", "JDA", "4.2.0_181") {
+    implementation("net.dv8tion:JDA:4.2.0_207") {
         exclude(module = "opus-java")
     }
-    implementation("club.minnced", "jda-reactor", "1.2.0")
-    implementation("dev.augu.nino", "Butterfly", "0.3.2")
+    implementation("club.minnced:jda-reactor:1.2.0")
+    implementation("dev.augu.nino:Butterfly:0.3.2")
 
     // Testing tools
-    testImplementation("junit", "junit", "4.13")
-    testImplementation("io.kotest", "kotest-runner-junit5-jvm", "4.1.3")
-    testImplementation("io.kotest", "kotest-assertions-core-jvm", "4.1.3")
-    testImplementation("io.kotest", "kotest-property-jvm", "4.1.3")
-    testImplementation("io.mockk", "mockk", "1.10.0")
-    testImplementation("org.jetbrains.kotlinx", "kotlinx-coroutines-test", "1.3.8")
-    testImplementation("org.koin", "koin-test", "2.1.6")
+    testImplementation("junit:junit:4.13")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.2.5")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:4.2.5")
+    testImplementation("io.kotest:kotest-property-jvm:4.2.5")
+    testImplementation("io.mockk:mockk:1.10.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9")
+    testImplementation("org.koin:koin-test:2.1.6")
 
     // Logging
-    api("org.slf4j", "slf4j-api", "1.7.28")
-    implementation("org.slf4j", "slf4j-simple", "1.7.28")
+    api("org.slf4j:slf4j-api:1.7.30")
+    implementation("org.slf4j:slf4j-simple:1.7.30")
 }
 
 application {

@@ -1,21 +1,19 @@
 package dev.augu.nino
 
-import kotlinx.serialization.ImplicitReflectionSerializer
-import dev.augu.nino.configuration.configurationModule
-import dev.augu.nino.common.util.createThread
-import dev.augu.nino.common.modules.commonModules
-import dev.augu.nino.butterfly.i18n.I18nLanguage
-import dev.augu.nino.configuration.Configuration
 import dev.augu.nino.butterfly.ButterflyClient
 import dev.augu.nino.butterfly.command.Command
+import dev.augu.nino.butterfly.i18n.I18nLanguage
 import dev.augu.nino.commands.commandModules
-import dev.augu.nino.services.serviceModule
 import dev.augu.nino.common.entities.Locale
-import org.koin.core.context.startKoin
+import dev.augu.nino.common.modules.commonModules
+import dev.augu.nino.common.util.createThread
+import dev.augu.nino.configuration.Configuration
+import dev.augu.nino.configuration.configurationModule
+import dev.augu.nino.services.serviceModule
 import org.koin.core.KoinComponent
-import org.slf4j.LoggerFactory
+import org.koin.core.context.startKoin
 import org.koin.core.inject
-
+import org.slf4j.LoggerFactory
 import java.io.File
 
 class Bot: KoinComponent {
@@ -63,7 +61,6 @@ class Bot: KoinComponent {
 
 object Bootstrap {
     @JvmStatic
-    @ImplicitReflectionSerializer
     fun main(args: Array<String>) {
         startKoin {
             if (File("/etc/nino.properties").exists()) {
