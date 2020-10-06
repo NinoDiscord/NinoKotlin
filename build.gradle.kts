@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("com.github.johnrengelman.shadow") version "6.0.0"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
     kotlin("plugin.serialization") version "1.4.10"
     kotlin("jvm") version "1.4.10"
     application
