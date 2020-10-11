@@ -36,7 +36,7 @@ dependencies {
     implementation("dev.augu.nino:Butterfly:0.3.2")
 
     // Testing tools
-    testImplementation("junit:junit:4.13")
+    testImplementation("junit:junit:4.13.1")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:4.2.5")
     testImplementation("io.kotest:kotest-assertions-core-jvm:4.2.5")
     testImplementation("io.kotest:kotest-property-jvm:4.2.5")
