@@ -23,7 +23,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.3.9")
 
     // Serialization
-    implementation("com.charleskorn.kaml:kaml:0.23.0")
+    implementation("com.charleskorn.kaml:kaml:0.25.0")
 
     // Dependency Injection
     implementation("org.koin:koin-core:2.1.6")
