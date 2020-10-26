@@ -41,7 +41,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core-jvm:4.2.5")
     testImplementation("io.kotest:kotest-property-jvm:4.2.5")
     testImplementation("io.mockk:mockk:1.10.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.0")
     testImplementation("org.koin:koin-test:2.1.6")
 
     // Logging
