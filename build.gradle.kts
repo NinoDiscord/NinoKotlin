@@ -33,7 +33,7 @@ dependencies {
         exclude(module = "opus-java")
     }
     implementation("club.minnced:jda-reactor:1.2.0")
-    implementation("dev.augu.nino:Butterfly:0.3.2")
+    implementation("dev.augu.nino:Butterfly:0.3.4")
 
     // Testing tools
     testImplementation("junit:junit:4.13")
