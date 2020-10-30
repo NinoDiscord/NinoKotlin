@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("com.github.johnrengelman.shadow") version "6.0.0"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
     kotlin("plugin.serialization") version "1.4.10"
     kotlin("jvm") version "1.4.10"
     application
@@ -33,7 +33,9 @@ dependencies {
         exclude(module = "opus-java")
     }
     implementation("club.minnced:jda-reactor:1.2.0")
-    implementation("dev.augu.nino:Butterfly:0.3.2")
+    implementation("dev.augu.nino:Butterfly:0.3.4") {
+        exclude(module = "kotlin-stdlib")
+    }
 
     // Testing tools
     testImplementation("junit:junit:4.13")

@@ -15,7 +15,7 @@ data class Locale(
         val contributors: List<String>,
         val translations: Map<String, String>
 ) {
-    fun toLanguage(): I18nLanguage = I18nLanguage(translations)
+    fun toLanguage(): I18nLanguage = I18nLanguage(name, translations)
 
     companion object {
         fun fromFile(file: File): Locale = Yaml.default.parse(serializer(), file.readText())

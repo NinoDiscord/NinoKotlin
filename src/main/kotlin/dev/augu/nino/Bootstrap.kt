@@ -34,7 +34,7 @@ class Bot: KoinComponent {
         logger.info("Loading ${locales.size} locales...")
         locales.forEach {
             logger.info("Loaded Locale: ${it.name} ${if (it.code == config.base.defaultLanguage) "(Default)" else ""}")
-            client.addLanguage(it.code, I18nLanguage(it.translations))
+            client.addLanguage(I18nLanguage(it.name, it.translations))
         }
     }
 
@@ -42,7 +42,7 @@ class Bot: KoinComponent {
      * Starts the bot's process
      */
     fun start() {
-        client.awaitReady()
+        client.jda.awaitReady()
         processEndHook()
     }
 
@@ -54,7 +54,7 @@ class Bot: KoinComponent {
         Runtime.getRuntime().addShutdownHook(createThread("Nino-ShutdownThread") {
             logger.info("Now shutting down...")
 
-            client.shutdownNow()
+            client.jda.shutdownNow()
         })
     }
 }
