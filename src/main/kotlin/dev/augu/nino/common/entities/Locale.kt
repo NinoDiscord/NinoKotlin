@@ -15,6 +15,7 @@ data class Locale(
         val contributors: List<String>,
         val translations: Map<String, String>
 ) {
+    val translateCount: Int = 100
     fun toLanguage(): I18nLanguage = I18nLanguage(name, translations)
 
     companion object {

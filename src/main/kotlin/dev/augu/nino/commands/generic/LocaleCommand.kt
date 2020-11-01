@@ -5,10 +5,10 @@ import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.GenericCommand
 import dev.augu.nino.common.entities.Locale
 import dev.augu.nino.common.util.createEmbed
+import dev.augu.nino.services.LocaleService
 
 class LocaleCommand(
-        private val locales: List<Locale>,
-        private val client: ButterflyClient
+        private val locales: LocaleService
 ): GenericCommand(
         "locale",
         "View, reset, or set the user/guild language.",
@@ -34,10 +34,7 @@ class LocaleCommand(
             return
         }
 
-        val subcommand = ctx.args[0]
-        ctx.args.drop(1)
-
-        return when (subcommand) {
+        return when (ctx.args[0]) {
             "reset" -> onLocaleReset(ctx)
             "list" -> onLocaleList(ctx)
             "set" -> onLocaleSet(ctx)
@@ -46,14 +43,21 @@ class LocaleCommand(
     }
 
     private suspend fun onLocaleReset(ctx: CommandContext) {
-        ctx.reply(":pencil2: **| Resetting locale to en_US...**")
+        ctx.reply(":pencil2: **| Reset the guild's locale to en_US.**")
     }
 
     private suspend fun onLocaleList(ctx: CommandContext) {
-        ctx.reply("locale list: `en_US`")
+        val embed = createEmbed {
+            setTitle("[ Languages Available ]")
+            setDescription(locales.locales.joinToString(", ") { lang ->
+                "• [${lang.flag}] **${lang.name}** by **${lang.contributors[0]}** (${locales.coverage(lang)}%, ${lang.contributors.size} contributors | `x!locale set ${lang.code}`)"
+            })
+        }
+
+        ctx.reply(embed.build())
     }
 
     private suspend fun onLocaleSet(ctx: CommandContext) {
-        ctx.reply("heck!")
+        ctx.reply(":white_check_mark: **Set locale to ${ctx.args[1]}**")
     }
 }
