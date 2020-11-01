@@ -10,4 +10,4 @@ abstract class GenericCommand(name: String, description: String, vararg aliases:
         description = description,
         userPermissions = userPermissions,
         botPermissions = botPermissions,
-        guildOnly = true)
+        guildOnly = false)

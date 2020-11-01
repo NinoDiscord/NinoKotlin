@@ -2,7 +2,7 @@ package dev.augu.nino.commands.generic
 
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.butterfly.i18n.I18nLanguage
-import dev.augu.nino.butterfly.util.edit
+import dev.augu.nino.butterfly.util.*
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,7 +15,7 @@ import java.time.ZoneOffset
 class PingCommandTest : DescribeSpec({
     describe("Integration Tests - Ping Command") {
         val cmd = spyk(PingCommand())
-        val language = I18nLanguage(mapOf(
+        val language = I18nLanguage("", mapOf(
                 "pingCommandOldMessage" to "Calculating...",
                 "pingCommandNewMessage" to "Shard \${id} | Ping: \${messageLatency}ms | Websocket: \${shard}ms"
         ))
@@ -29,7 +29,7 @@ class PingCommandTest : DescribeSpec({
             every { ctx.message.timeCreated } returns instant.atOffset(ZoneOffset.UTC)
             coEvery { ctx.language() } returns language
             every { ctx.client.jda.shardInfo.shardId } returns 0
-            every { ctx.client.gatewayPing } returns 55
+            every { ctx.client.jda.gatewayPing } returns 55
             coEvery { ctx.reply(any<CharSequence>()) } returns sampleMsg
             coEvery { ctx.replyTranslate(any()) } coAnswers {
                 ctx.reply(language.translate(it.invocation.args[0] as String))
@@ -46,7 +46,7 @@ class PingCommandTest : DescribeSpec({
                 ctx.reply("Calculating...")
             }
             coVerify {
-                sampleMsg.edit("Shard 0 | Ping: 500ms | Websocket: 55ms")
+                sampleMsg.editMessage("Shard 0 | Ping: 500ms | Websocket: 55ms")
             }
         }
     }

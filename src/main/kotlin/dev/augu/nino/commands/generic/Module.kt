@@ -7,4 +7,5 @@ import org.koin.dsl.module
 val genericCommandModule = module {
     single { PingCommand() } bind Command::class
     single { HelpCommand(get()) } bind Command::class
+    single { UptimeCommand() } bind Command::class
 }

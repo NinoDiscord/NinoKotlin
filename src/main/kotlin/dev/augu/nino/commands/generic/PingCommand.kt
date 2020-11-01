@@ -5,8 +5,8 @@ import dev.augu.nino.common.entities.GenericCommand
 
 class PingCommand: GenericCommand(
         "ping",
-        "Shows the bot's ping.",
-        "pong", "pang"
+        "Shows the bot's latency with Discord",
+        "pong", "pang",
 ) {
     override suspend fun execute(ctx: CommandContext) {
         val startedAt = ctx.message.timeCreated

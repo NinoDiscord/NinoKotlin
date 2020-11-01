@@ -33,7 +33,7 @@ class HelpCommand(private val client: ButterflyClient): GenericCommand(
 
             for ((category, cmds) in categories) {
                 val all = cmds.joinToString(", ") { "`$it`" }
-                embed.addField("• $category [${categories[category]!!.size}]", all, false)
+                embed.addField("• ${category.capitalize()} [${categories[category]!!.size}]", all, false)
             }
 
             ctx.reply(embed.build())
@@ -49,7 +49,7 @@ class HelpCommand(private val client: ButterflyClient): GenericCommand(
                 val embed = createEmbed {
                     setTitle("[ Command $prefix${command.name} ]")
                     setDescription("> :pencil2: **${command.description}**")
-                    addField("• Category", command.category, true)
+                    addField("• Category", command.category.capitalize(), true)
                     addField("• Aliases", aliases, true)
                     addField("• Guild Only", if (command.guildOnly) "Yes" else "No", true)
                     addField("• Owner Only", if (command.ownerOnly) "Yes" else "No", true)
@@ -64,7 +64,7 @@ class HelpCommand(private val client: ButterflyClient): GenericCommand(
                     val commands = modules.values.joinToString("\n") { "• `$prefix${it.name}`: **${it.description}**"}
 
                     val embed = createEmbed {
-                        setTitle("[ Module $search ]")
+                        setTitle("[ Module ${search.capitalize()} ]")
                         setDescription(commands)
                     }
 

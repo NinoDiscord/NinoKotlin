@@ -6,7 +6,7 @@ import java.io.File
 
 val localeModule = module {
     factory<List<Locale>> {
-        val directory = File(getPropertyOrNull("localeDirectory") ?: "locale")
+        val directory = File(getPropertyOrNull("localeDirectory") ?: "locales")
         if (!directory.exists() || !directory.isDirectory) {
             return@factory arrayListOf<Locale>()
         }

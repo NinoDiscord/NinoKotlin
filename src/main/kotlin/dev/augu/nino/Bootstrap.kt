@@ -1,5 +1,6 @@
 package dev.augu.nino
 
+import club.minnced.jda.reactor.on
 import dev.augu.nino.butterfly.ButterflyClient
 import dev.augu.nino.butterfly.command.Command
 import dev.augu.nino.butterfly.i18n.I18nLanguage
@@ -10,6 +11,11 @@ import dev.augu.nino.common.util.createThread
 import dev.augu.nino.configuration.Configuration
 import dev.augu.nino.configuration.configurationModule
 import dev.augu.nino.services.serviceModule
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.OnlineStatus
+import net.dv8tion.jda.api.entities.Activity
+import net.dv8tion.jda.api.events.DisconnectEvent
+import net.dv8tion.jda.api.events.ReadyEvent
 import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.inject
@@ -20,6 +26,7 @@ class Bot: KoinComponent {
     private val client: ButterflyClient by inject()
     private val config: Configuration by inject()
     private val logger = LoggerFactory.getLogger(javaClass)
+    private val jda: JDA by inject()
 
     init {
         Thread.currentThread().name = "Nino-MainThread"
@@ -37,6 +44,25 @@ class Bot: KoinComponent {
         locales.forEach {
             logger.info("Loaded Locale: ${it.name} ${if (it.code == config.base.defaultLanguage) "(Default)" else ""}")
             client.addLanguage(I18nLanguage(it.name, it.translations))
+        }
+
+        jda.on<ReadyEvent>().subscribe { event ->
+            logger.info("Logged in as ${event.jda.selfUser.asTag} | ${event.guildTotalCount} Guilds (${event.guildUnavailableCount} unavailable)")
+            logger.info("Setting presence to \"${config.status?.status ?: "default"}\"")
+            event.jda.presence.setPresence(
+                    OnlineStatus.ONLINE,
+                    Activity.of(
+                            Activity.ActivityType.fromKey(config.status?.type ?: 0),
+                            config.status?.status ?: "${config.base.prefixes[0]}help | ${event.guildTotalCount} Guilds"
+                    )
+            )
+        }
+
+        jda.on<DisconnectEvent>().subscribe { event ->
+            logger.warn("We have disconnected from Discord once more, now we wait for a new connection?")
+            if (event.closeCode != null) {
+                logger.error("[${event.closeCode!!.code}]: ${event.closeCode!!.meaning}")
+            }
         }
     }
 
