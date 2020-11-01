@@ -2,18 +2,19 @@ package dev.augu.nino.commands.generic
 
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.GenericCommand
+import dev.augu.nino.butterfly.util.edit
 
 class PingCommand: GenericCommand(
         "ping",
         "Shows the bot's latency with Discord",
-        "pong", "pang",
+        "pong", "pang"
 ) {
     override suspend fun execute(ctx: CommandContext) {
         val startedAt = ctx.message.timeCreated
         val msg = ctx.replyTranslate("pingCommandOldMessage")
 
         val gatewayPing = ctx.client.jda.gatewayPing
-        msg.editMessage(ctx.language()!!.translate("pingCommandNewMessage", mapOf(
+        msg.edit(ctx.language()!!.translate("pingCommandNewMessage", mapOf(
                 "id" to ctx.client.jda.shardInfo.shardId.toString(),
                 "shard" to gatewayPing.toString(),
                 "messageLatency" to (msg.timeCreated.toInstant().toEpochMilli() - startedAt.toInstant().toEpochMilli()).toString()

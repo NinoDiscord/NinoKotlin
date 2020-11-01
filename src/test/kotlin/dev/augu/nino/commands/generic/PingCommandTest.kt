@@ -46,7 +46,7 @@ class PingCommandTest : DescribeSpec({
                 ctx.reply("Calculating...")
             }
             coVerify {
-                sampleMsg.editMessage("Shard 0 | Ping: 500ms | Websocket: 55ms")
+                sampleMsg.edit("Shard 0 | Ping: 500ms | Websocket: 55ms")
             }
         }
     }
