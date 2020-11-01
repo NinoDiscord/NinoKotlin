@@ -22,6 +22,8 @@ class Bot: KoinComponent {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     init {
+        Thread.currentThread().name = "Nino-MainThread"
+
         val commands = getKoin().getAll<Command>()
         logger.info("Loading ${commands.size} commands...")
         commands.forEach {

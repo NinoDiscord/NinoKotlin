@@ -18,6 +18,6 @@ data class Locale(
     fun toLanguage(): I18nLanguage = I18nLanguage(name, translations)
 
     companion object {
-        fun fromFile(file: File): Locale = Yaml.default.parse(serializer(), file.readText())
+        fun fromFile(file: File): Locale = Yaml.default.decodeFromString(serializer(), file.readText())
     }
 }

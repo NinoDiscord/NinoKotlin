@@ -8,6 +8,6 @@ val configurationModule = module {
     single {
         val configFile = File(getPropertyOrNull("configurationFile") ?: "config.yml")
 
-        Yaml.default.parse(Configuration.serializer(), configFile.readText())
+        Yaml.default.decodeFromString(Configuration.serializer(), configFile.readText())
     }
 }

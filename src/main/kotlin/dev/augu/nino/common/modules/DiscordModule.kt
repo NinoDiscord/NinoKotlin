@@ -1,5 +1,6 @@
 package dev.augu.nino.common.modules
 
+import club.minnced.jda.reactor.ReactiveEventManager
 import dev.augu.nino.butterfly.ButterflyClient
 import dev.augu.nino.common.entities.Locale
 import dev.augu.nino.configuration.Configuration
@@ -9,7 +10,10 @@ import org.koin.dsl.module
 val discordModule = module {
     single {
         val config: Configuration = get()
-        JDABuilder.createDefault(config.base.token).build()
+        JDABuilder
+                .createDefault(config.base.token)
+                .setEventManager(ReactiveEventManager())
+                .build()
     }
     single {
         val locales: List<Locale> = get()

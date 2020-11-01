@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.Permission
 
 class HelpCommand(private val client: ButterflyClient): GenericCommand(
         "help",
-        "Gives a list of ${client.jda.selfUser.asTag}'s commands or shows documentation on a specific comman",
+        "Gives a list of ${client.jda.selfUser.asTag}'s commands or shows documentation on a specific command or module",
         "halp", "h", "cmds", "commands", "?"
 ) {
     override suspend fun execute(ctx: CommandContext) {
@@ -65,7 +65,7 @@ class HelpCommand(private val client: ButterflyClient): GenericCommand(
 
                     val embed = createEmbed {
                         setTitle("[ Module $search ]")
-                        setDescription("```prolog\n$commands\n```")
+                        setDescription(commands)
                     }
 
                     ctx.reply(embed.build())
