@@ -34,7 +34,7 @@ dependencies {
         exclude(module = "opus-java")
     }
     implementation("club.minnced:jda-reactor:1.2.0")
-    implementation("dev.augu.nino:Butterfly:0.3.4") {
+    implementation("dev.augu.nino:Butterfly:0.3.5") {
         exclude(module = "kotlin-stdlib")
     }
 
