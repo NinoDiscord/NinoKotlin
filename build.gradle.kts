@@ -19,17 +19,17 @@ repositories {
 dependencies {
     // Kotlin
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.3.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.0")
 
     // Serialization
-    implementation("com.charleskorn.kaml:kaml:0.23.0")
+    implementation("com.charleskorn.kaml:kaml:0.25.0")
 
     // Dependency Injection
     implementation("org.koin:koin-core:2.1.6")
 
     // JDA
-    implementation("net.dv8tion:JDA:4.2.0_207") {
+    implementation("net.dv8tion:JDA:4.2.0_214") {
         exclude(module = "opus-java")
     }
     implementation("club.minnced:jda-reactor:1.2.0")
@@ -38,12 +38,12 @@ dependencies {
     }
 
     // Testing tools
-    testImplementation("junit:junit:4.13")
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.2.5")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:4.2.5")
-    testImplementation("io.kotest:kotest-property-jvm:4.2.5")
-    testImplementation("io.mockk:mockk:1.10.1")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9")
+    testImplementation("junit:junit:4.13.1")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.3.1")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:4.3.1")
+    testImplementation("io.kotest:kotest-property-jvm:4.3.1")
+    testImplementation("io.mockk:mockk:1.10.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.0")
     testImplementation("org.koin:koin-test:2.1.6")
 
     // Logging
