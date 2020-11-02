@@ -14,5 +14,6 @@ abstract class GenericCommand(
         *aliases,
         description = description,
         userPermissions = userPermissions,
-        botPermissions = botPermissions
+        botPermissions = botPermissions,
+        guildOnly = false
 )

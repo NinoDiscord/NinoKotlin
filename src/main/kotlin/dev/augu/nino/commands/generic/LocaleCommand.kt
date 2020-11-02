@@ -58,6 +58,6 @@ class LocaleCommand(
     }
 
     private suspend fun onLocaleSet(ctx: CommandContext) {
-        ctx.reply(":white_check_mark: **Set locale to ${ctx.args[1]}**")
+        ctx.reply(":white_check_mark: **Set guild locale to ${ctx.args[1]}**")
     }
 }

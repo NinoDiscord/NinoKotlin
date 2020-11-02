@@ -9,4 +9,5 @@ val genericCommandModule = module {
     single { LocaleCommand(get()) } bind Command::class
     single { HelpCommand(get()) } bind Command::class
     single { UptimeCommand() } bind Command::class
+    single { StatisticsCommand(get()) } bind Command::class
 }

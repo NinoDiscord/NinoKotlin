@@ -24,7 +24,7 @@ val discordModule = module {
                 )
                 .enableIntents(
                         GatewayIntent.GUILD_BANS,
-                        GatewayIntent.DIRECT_MESSAGES
+                        GatewayIntent.GUILD_MESSAGES
                 )
                 .disableIntents(
                         GatewayIntent.DIRECT_MESSAGES,
