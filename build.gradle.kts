@@ -24,7 +24,7 @@ dependencies {
 
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-    implementation("com.charleskorn.kaml:kaml:0.25.0")
+    implementation("com.charleskorn.kaml:kaml:0.26.0")
 
     // Dependency Injection
     implementation("org.koin:koin-core:2.1.6")
