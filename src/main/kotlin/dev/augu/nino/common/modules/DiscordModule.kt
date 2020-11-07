@@ -15,15 +15,16 @@ val discordModule = module {
         JDABuilder
                 .createDefault(config.base.token)
                 .setEventManager(ReactiveEventManager())
+                .setLargeThreshold(50)
                 .disableCache(
                         CacheFlag.CLIENT_STATUS,
                         CacheFlag.ACTIVITY,
                         CacheFlag.EMOTE,
-                        CacheFlag.MEMBER_OVERRIDES,
                         CacheFlag.VOICE_STATE
                 )
                 .enableIntents(
                         GatewayIntent.GUILD_BANS,
+                        GatewayIntent.GUILD_MEMBERS,
                         GatewayIntent.GUILD_MESSAGES
                 )
                 .disableIntents(
@@ -32,7 +33,6 @@ val discordModule = module {
                         GatewayIntent.DIRECT_MESSAGE_TYPING,
                         GatewayIntent.GUILD_EMOJIS,
                         GatewayIntent.GUILD_INVITES,
-                        GatewayIntent.GUILD_MEMBERS,
                         GatewayIntent.GUILD_MESSAGE_REACTIONS,
                         GatewayIntent.GUILD_MESSAGE_TYPING,
                         GatewayIntent.GUILD_PRESENCES,
