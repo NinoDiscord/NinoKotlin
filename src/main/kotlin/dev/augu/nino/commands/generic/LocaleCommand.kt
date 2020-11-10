@@ -1,11 +1,9 @@
 package dev.augu.nino.commands.generic
 
-import dev.augu.nino.butterfly.ButterflyClient
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.GenericCommand
-import dev.augu.nino.common.entities.Locale
 import dev.augu.nino.common.util.createEmbed
-import dev.augu.nino.services.LocaleService
+import dev.augu.nino.services.locale.LocaleService
 
 class LocaleCommand(
         private val locales: LocaleService

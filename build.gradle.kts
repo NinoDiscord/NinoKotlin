@@ -36,6 +36,12 @@ dependencies {
     implementation("club.minnced:jda-reactor:1.2.0")
     implementation("dev.augu.nino:Butterfly:0.3.5")
 
+    // Redis
+    implementation("io.lettuce:lettuce-core:6.0.1.RELEASE")
+
+    // Postgres
+    implementation("io.r2dbc:r2dbc-postgresql:0.8.6.RELEASE")
+
     // Testing tools
     testImplementation("junit:junit:4.13.1")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:4.3.1")
