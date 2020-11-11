@@ -27,7 +27,7 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.26.0")
 
     // Dependency Injection
-    implementation("org.koin:koin-core:2.1.6")
+    implementation("org.koin:koin-core:2.2.0")
 
     // JDA
     implementation("net.dv8tion:JDA:4.2.0_214") {
