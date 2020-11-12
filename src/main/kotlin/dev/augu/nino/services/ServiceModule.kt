@@ -1,12 +1,21 @@
 package dev.augu.nino.services
 
+import dev.augu.nino.services.discord.DiscordService
+import dev.augu.nino.services.discord.IDiscordService
+import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.locale.LocaleService
+import dev.augu.nino.services.moderation.IModerationService
+import dev.augu.nino.services.moderation.ModerationService
+import dev.augu.nino.services.postgres.IPostgresService
 import dev.augu.nino.services.postgres.PostgresService
+import dev.augu.nino.services.redis.IRedisService
 import dev.augu.nino.services.redis.RedisService
 import org.koin.dsl.module
 
 val serviceModule = module {
-    single { LocaleService(get(), get()) }
-    single { RedisService(get()) }
-    single { PostgresService(get()) }
+    single<ILocaleService> { LocaleService(get(), get()) }
+    single<IRedisService> { RedisService(get()) }
+    single<IPostgresService> { PostgresService(get()) }
+    single<IModerationService> { ModerationService() }
+    single<IDiscordService> { DiscordService() }
 }

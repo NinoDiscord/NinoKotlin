@@ -6,7 +6,7 @@ import io.lettuce.core.RedisURI
 import io.lettuce.core.api.StatefulRedisConnection
 import io.lettuce.core.codec.RedisCodec
 
-class RedisService(config: Configuration) {
+class RedisService(config: Configuration) : IRedisService {
 
     private val redisURI: RedisURI
 
@@ -29,7 +29,7 @@ class RedisService(config: Configuration) {
 
     private val redisClient: RedisClient = RedisClient.create(redisURI)
 
-    fun createConnection(): StatefulRedisConnection<String, String> = redisClient.connect()
+    override fun createConnection(): StatefulRedisConnection<String, String> = redisClient.connect()
 
-    fun <K, V> createConnection(codec: RedisCodec<K, V>): StatefulRedisConnection<K, V> = redisClient.connect(codec)
+    override fun <K, V> createConnection(codec: RedisCodec<K, V>): StatefulRedisConnection<K, V> = redisClient.connect(codec)
 }

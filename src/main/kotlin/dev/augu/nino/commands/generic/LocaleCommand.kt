@@ -3,10 +3,10 @@ package dev.augu.nino.commands.generic
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.GenericCommand
 import dev.augu.nino.common.util.createEmbed
-import dev.augu.nino.services.locale.LocaleService
+import dev.augu.nino.services.locale.ILocaleService
 
 class LocaleCommand(
-        private val locales: LocaleService
+        private val locales: ILocaleService
 ): GenericCommand(
         "locale",
         "View, reset, or set the user/guild language.",

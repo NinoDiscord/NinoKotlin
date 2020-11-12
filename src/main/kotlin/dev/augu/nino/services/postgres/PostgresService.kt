@@ -7,7 +7,7 @@ import io.r2dbc.postgresql.api.PostgresqlConnection
 import kotlinx.coroutines.reactive.awaitSingle
 import reactor.core.publisher.Mono
 
-class PostgresService(config: Configuration) {
+class PostgresService(config: Configuration) : IPostgresService {
     private val postgresqlConnectionFactory: PostgresqlConnectionFactory
 
     init {
@@ -22,7 +22,7 @@ class PostgresService(config: Configuration) {
                 .build())
     }
 
-    fun createConnectionMono(): Mono<PostgresqlConnection> = Mono.from(postgresqlConnectionFactory.create())
+    override fun createConnectionMono(): Mono<PostgresqlConnection> = Mono.from(postgresqlConnectionFactory.create())
 
-    suspend fun createConnection(): PostgresqlConnection = postgresqlConnectionFactory.create().awaitSingle()
+    override suspend fun createConnection(): PostgresqlConnection = postgresqlConnectionFactory.create().awaitSingle()
 }

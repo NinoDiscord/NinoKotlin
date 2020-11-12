@@ -9,5 +9,5 @@ data class PostgresConfiguration(
         val username: String,
         val password: String,
         val database: String,
-        val schema: String?
+        val schema: String? = null
 )
