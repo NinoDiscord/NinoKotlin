@@ -9,4 +9,5 @@ val moderationModule = module {
     single { BanCommand(get(), get()) } bind Command::class
     single { UnbanCommand(get(), get()) } bind Command::class
     single { SoftbanCommand(get(), get()) } bind Command::class
+    single { KickCommand(get(), get()) } bind Command::class
 }

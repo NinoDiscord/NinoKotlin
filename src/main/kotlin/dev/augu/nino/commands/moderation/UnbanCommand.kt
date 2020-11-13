@@ -16,7 +16,7 @@ class UnbanCommand(private val discordService: IDiscordService, private val mode
         val arguments = extractArguments(ctx.args)
 
         if (arguments == null) {
-            ctx.replyTranslate("unbanCommandInvalidArguments")
+            ctx.replyTranslate("unbanCommandInvalidArguments", mapOf("prefix" to ctx.prefix))
             return
         }
 
@@ -35,9 +35,9 @@ class UnbanCommand(private val discordService: IDiscordService, private val mode
         moderationService.unban(arguments.userId, ctx.guild!!, arguments.reason)
 
         if (arguments.reason.isNullOrEmpty()) {
-            ctx.replyTranslate("unbanCommandSuccess", mapOf("user" to userToUnban.name))
+            ctx.replyTranslate("unbanCommandSuccess", mapOf("user" to userToUnban.name, "prefix" to ctx.prefix))
         } else {
-            ctx.replyTranslate("unbanCommandSuccessReason", mapOf("user" to userToUnban.name, "reason" to arguments.reason))
+            ctx.replyTranslate("unbanCommandSuccessReason", mapOf("user" to userToUnban.name, "reason" to arguments.reason, "prefix" to ctx.prefix))
         }
 
         // TODO("Add logging")
@@ -50,9 +50,9 @@ class UnbanCommand(private val discordService: IDiscordService, private val mode
             return null
         }
 
-        val userToBanId = discordService.extractSnowflake(args[0]) ?: return null
+        val userId = discordService.extractSnowflake(args[0]) ?: return null
         val reason = args.drop(1).joinToString(" ").trim()
 
-        return Arguments(userToBanId, reason)
+        return Arguments(userId, reason)
     }
 }

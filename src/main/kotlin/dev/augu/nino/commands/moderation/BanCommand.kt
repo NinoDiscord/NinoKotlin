@@ -22,7 +22,7 @@ class BanCommand(
         val arguments = extractArguments(ctx.args)
 
         if (arguments == null) {
-            ctx.replyTranslate("banCommandInvalidArguments")
+            ctx.replyTranslate("banCommandInvalidArguments", mapOf("prefix" to ctx.prefix))
             return
         }
 
@@ -70,10 +70,10 @@ class BanCommand(
             return null
         }
 
-        val userToBanId = discordService.extractSnowflake(args[0]) ?: return null
+        val userId = discordService.extractSnowflake(args[0]) ?: return null
         val reason = args.drop(1).joinToString(" ").takeWhile { char -> char != '|' }.trim()
         val duration = parseDuration(args.drop(1).joinToString(" ").dropWhile { char -> char != '|' }.trim())
 
-        return Arguments(userToBanId, reason, duration)
+        return Arguments(userId, reason, duration)
     }
 }
