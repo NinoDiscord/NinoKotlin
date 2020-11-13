@@ -41,7 +41,8 @@ class ModerationService : IModerationService {
     }
 
     override suspend fun softban(userId: String, guild: Guild, reason: String?, delDays: Int?) {
-        TODO("Not yet implemented")
+        ban(userId, guild, reason, delDays)
+        unban(userId, guild, reason)
     }
 
     override suspend fun mute(member: Member, reason: String?) {
