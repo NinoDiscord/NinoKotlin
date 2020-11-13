@@ -10,12 +10,15 @@ import dev.augu.nino.services.postgres.IPostgresService
 import dev.augu.nino.services.postgres.PostgresService
 import dev.augu.nino.services.redis.IRedisService
 import dev.augu.nino.services.redis.RedisService
+import dev.augu.nino.services.settings.GuildSettingsService
+import dev.augu.nino.services.settings.IGuildSettingsService
 import org.koin.dsl.module
 
 val serviceModule = module {
     single<ILocaleService> { LocaleService(get(), get()) }
     single<IRedisService> { RedisService(get()) }
     single<IPostgresService> { PostgresService(get()) }
-    single<IModerationService> { ModerationService() }
+    single<IModerationService> { ModerationService(get(), get()) }
     single<IDiscordService> { DiscordService() }
+    single<IGuildSettingsService> { GuildSettingsService(get(), get(), get()) }
 }

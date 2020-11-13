@@ -1,10 +1,11 @@
 package dev.augu.nino.services.postgres
 
-import io.r2dbc.postgresql.api.PostgresqlConnection
-import reactor.core.publisher.Mono
+import org.jetbrains.exposed.sql.Database
+import java.sql.Connection
 
 interface IPostgresService {
-    fun createConnectionMono(): Mono<PostgresqlConnection>
 
-    suspend fun createConnection(): PostgresqlConnection
+    fun createConnection(): Connection
+
+    val database: Database
 }

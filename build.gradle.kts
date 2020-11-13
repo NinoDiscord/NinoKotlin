@@ -4,6 +4,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
     kotlin("plugin.serialization") version "1.4.10"
     kotlin("jvm") version "1.4.10"
+    id("org.liquibase.gradle") version "2.0.4"
     application
 }
 
@@ -40,7 +41,17 @@ dependencies {
     implementation("io.lettuce:lettuce-core:6.0.1.RELEASE")
 
     // Postgres
-    implementation("io.r2dbc:r2dbc-postgresql:0.8.6.RELEASE")
+    implementation("org.postgresql:postgresql:42.2.18")
+    implementation("com.zaxxer:HikariCP:3.4.1")
+    implementation("org.jetbrains.exposed:exposed-core:0.28.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.28.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.28.1")
+
+    // Liquibase (Database Migration)
+    liquibaseRuntime("org.liquibase:liquibase-core:3.8.1")
+    liquibaseRuntime("org.liquibase:liquibase-groovy-dsl:2.1.1")
+    liquibaseRuntime("org.postgresql:postgresql:42.2.18")
+    liquibaseRuntime("javax.xml.bind", "jaxb-api", "2.3.1")
 
     // Testing tools
     testImplementation("junit:junit:4.13.1")
@@ -61,6 +72,23 @@ application {
     java {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+liquibase {
+    activities {
+        create("main") {
+            val databaseJdbcUrl by project.extra.properties
+            val databaseUsername by project.extra.properties
+            val databasePassword by project.extra.properties
+            arguments = mapOf(
+                    "logLevel" to "info",
+                    "changeLogFile" to "src/main/resources/db/changelog.sql",
+                    "url" to databaseJdbcUrl,
+                    "username" to databaseUsername,
+                    "password" to databasePassword
+            )
+        }
     }
 }
 

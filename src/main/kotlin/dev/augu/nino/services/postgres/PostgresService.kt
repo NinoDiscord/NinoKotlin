@@ -1,28 +1,28 @@
 package dev.augu.nino.services.postgres
 
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import dev.augu.nino.configuration.Configuration
-import io.r2dbc.postgresql.PostgresqlConnectionConfiguration
-import io.r2dbc.postgresql.PostgresqlConnectionFactory
-import io.r2dbc.postgresql.api.PostgresqlConnection
-import kotlinx.coroutines.reactive.awaitSingle
-import reactor.core.publisher.Mono
+import org.jetbrains.exposed.sql.Database
+import java.sql.Connection
 
 class PostgresService(config: Configuration) : IPostgresService {
-    private val postgresqlConnectionFactory: PostgresqlConnectionFactory
+    private val dataSource: HikariDataSource
 
     init {
         val postgresConfig = config.postgres
-        postgresqlConnectionFactory = PostgresqlConnectionFactory(PostgresqlConnectionConfiguration.builder()
-                .host(postgresConfig.host)
-                .port(postgresConfig.port)
-                .database(postgresConfig.database)
-                .username(postgresConfig.username)
-                .password(postgresConfig.password)
-                .schema(postgresConfig.schema)
-                .build())
+        dataSource = HikariDataSource(HikariConfig().let {
+            it.jdbcUrl = postgresConfig.jdbcUrl
+            it.username = postgresConfig.username
+            it.password = postgresConfig.password
+            it.schema = postgresConfig.schema ?: "public"
+            it.driverClassName = "org.postgresql.Driver"
+            it
+        })
     }
 
-    override fun createConnectionMono(): Mono<PostgresqlConnection> = Mono.from(postgresqlConnectionFactory.create())
+    override fun createConnection(): Connection = dataSource.connection
 
-    override suspend fun createConnection(): PostgresqlConnection = postgresqlConnectionFactory.create().awaitSingle()
+    override val database: Database
+        get() = Database.connect(dataSource)
 }

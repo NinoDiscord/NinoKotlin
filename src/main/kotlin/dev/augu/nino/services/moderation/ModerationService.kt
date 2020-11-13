@@ -1,12 +1,14 @@
 package dev.augu.nino.services.moderation
 
 import club.minnced.jda.reactor.asMono
+import dev.augu.nino.services.discord.IDiscordService
+import dev.augu.nino.services.settings.IGuildSettingsService
 import kotlinx.coroutines.reactive.awaitSingleOrNull
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import java.time.Duration
 
-class ModerationService : IModerationService {
+class ModerationService(private val discordService: IDiscordService, private val guildSettingsService: IGuildSettingsService) : IModerationService {
     override suspend fun ban(member: Member, reason: String?, delDays: Int?) {
         member.ban(delDays ?: 7, reason).asMono().awaitSingleOrNull()
     }
@@ -46,11 +48,21 @@ class ModerationService : IModerationService {
     }
 
     override suspend fun mute(member: Member, reason: String?) {
-        TODO("Not yet implemented")
+        mute(member.id, member.guild, reason)
     }
 
     override suspend fun mute(memberId: String, guild: Guild, reason: String?) {
-        TODO("Not yet implemented")
+        var mutedRole = guildSettingsService.getMutedRole(guild.id)
+
+        if (mutedRole == null) {
+            mutedRole = discordService.createMutedRole(guild)
+            guildSettingsService.setMutedRole(mutedRole.id, guild.id)
+        }
+
+        guild.addRoleToMember(memberId, mutedRole)
+                .reason(reason)
+                .asMono()
+                .awaitSingleOrNull()
     }
 
     override suspend fun tempmute(member: Member, duration: Duration, reason: String?) {
@@ -62,10 +74,15 @@ class ModerationService : IModerationService {
     }
 
     override suspend fun unmute(member: Member, reason: String?) {
-        TODO("Not yet implemented")
+        unmute(member.id, member.guild, reason)
     }
 
     override suspend fun unmute(memberId: String, guild: Guild, reason: String?) {
-        TODO("Not yet implemented")
+        val mutedRole = guildSettingsService.getMutedRole(guild.id) ?: return
+
+        guild.removeRoleFromMember(memberId, mutedRole)
+                .reason(reason)
+                .asMono()
+                .awaitSingleOrNull()
     }
 }
