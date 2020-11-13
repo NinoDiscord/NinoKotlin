@@ -28,7 +28,7 @@ class GuildSettingsService(
         }
     }
 
-    override suspend fun getMutedRole(guildId: String): Role? {
+    override fun getMutedRole(guildId: String): Role? {
         return transaction(postgresService.database) {
             val roleId = MutedRole.find { MutedRoles.guildId eq guildId }.firstOrNull()?.mutedRoleId
                     ?: return@transaction null

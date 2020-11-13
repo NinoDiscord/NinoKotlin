@@ -2,18 +2,17 @@ package dev.augu.nino.commands.moderation
 
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.ModerationCommand
+import dev.augu.nino.common.entities.NinoGuildSettings
 import dev.augu.nino.common.util.formatDurationLong
 import dev.augu.nino.common.util.parseDuration
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
-import dev.augu.nino.services.settings.IGuildSettingsService
 import net.dv8tion.jda.api.Permission
 import java.time.Duration
 
 class MuteCommand(
         private val discordService: IDiscordService,
-        private val moderationService: IModerationService,
-        private val guildSettingsService: IGuildSettingsService
+        private val moderationService: IModerationService
 ) : ModerationCommand(
         "mute",
         "Mutes the user",
@@ -43,7 +42,10 @@ class MuteCommand(
             return
         }
 
-        if (memberToMute.roles.contains(guildSettingsService.getMutedRole(ctx.guild!!.id))) {
+
+        val settings = ctx.settings<NinoGuildSettings>()
+
+        if (memberToMute.roles.contains(settings?.mutedRole)) {
             ctx.replyTranslate("muteCommandAlreadyMuted")
             return
         }

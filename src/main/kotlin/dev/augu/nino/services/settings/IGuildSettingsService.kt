@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.Role
 interface IGuildSettingsService {
     fun getGuildGeneralSettings(guildId: String): GuildGeneralSettings
 
-    suspend fun getMutedRole(guildId: String): Role?
+    fun getMutedRole(guildId: String): Role?
 
     fun setMutedRole(roleId: String, guildId: String)
 }

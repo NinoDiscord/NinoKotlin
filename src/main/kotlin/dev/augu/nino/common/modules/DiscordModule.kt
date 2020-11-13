@@ -2,8 +2,8 @@ package dev.augu.nino.common.modules
 
 import club.minnced.jda.reactor.ReactiveEventManager
 import dev.augu.nino.butterfly.ButterflyClient
-import dev.augu.nino.butterfly.GuildSettings
 import dev.augu.nino.butterfly.GuildSettingsLoader
+import dev.augu.nino.common.entities.NinoGuildSettings
 import dev.augu.nino.configuration.Configuration
 import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.settings.IGuildSettingsService
@@ -13,14 +13,15 @@ import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.utils.cache.CacheFlag
 import org.koin.dsl.module
 
-private class CustomGuildSettingsLoader(private val guildSettingsService: IGuildSettingsService, private val localeService: ILocaleService) : GuildSettingsLoader<GuildSettings> {
-    override suspend fun load(guild: Guild): GuildSettings? {
+private class CustomGuildSettingsLoader(private val guildSettingsService: IGuildSettingsService, private val localeService: ILocaleService) : GuildSettingsLoader<NinoGuildSettings> {
+    override suspend fun load(guild: Guild): NinoGuildSettings? {
         val settings = guildSettingsService.getGuildGeneralSettings(guild.id)
 
-        return GuildSettings(
+        return NinoGuildSettings(
+                guild.id,
                 settings.prefix,
-                localeService.locales.firstOrNull { it.code == settings.localeCode }?.toLanguage()
-                        ?: localeService.defaultLocale.toLanguage()
+                localeService.locales.firstOrNull { it.code == settings.localeCode } ?: localeService.defaultLocale,
+                guildSettingsService
         )
     }
 

@@ -2,12 +2,12 @@ package dev.augu.nino.commands.moderation
 
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.ModerationCommand
+import dev.augu.nino.common.entities.NinoGuildSettings
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
-import dev.augu.nino.services.settings.IGuildSettingsService
 import net.dv8tion.jda.api.Permission
 
-class UnmuteCommand(private val discordService: IDiscordService, private val moderationService: IModerationService, private val guildSettingsService: IGuildSettingsService) : ModerationCommand(
+class UnmuteCommand(private val discordService: IDiscordService, private val moderationService: IModerationService) : ModerationCommand(
         "unmute",
         "Unmutes the user",
         userPermissions = Permission.BAN_MEMBERS.rawValue,
@@ -28,7 +28,9 @@ class UnmuteCommand(private val discordService: IDiscordService, private val mod
             return
         }
 
-        if (!memberToUnmute.roles.contains(guildSettingsService.getMutedRole(ctx.guild!!.id))) {
+        val settings = ctx.settings<NinoGuildSettings>()
+
+        if (!memberToUnmute.roles.contains(settings?.mutedRole)) {
             ctx.replyTranslate("unmuteCommandNotMuted")
             return
         }
