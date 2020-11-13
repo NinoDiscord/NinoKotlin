@@ -14,7 +14,7 @@ private val SNOWFLAKE_REGEX = Regex("(?:<@!?)?(\\d+)(?:>)?")
 class DiscordService : IDiscordService {
 
     override fun extractSnowflake(text: String): String? {
-        return SNOWFLAKE_REGEX.find(text)?.groupValues?.get(0)
+        return SNOWFLAKE_REGEX.find(text)?.groupValues?.get(1)
     }
 
     override suspend fun extractMemberFromId(memberId: String, guild: Guild): Member? {
