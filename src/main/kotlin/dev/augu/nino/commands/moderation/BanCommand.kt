@@ -1,7 +1,7 @@
 package dev.augu.nino.commands.moderation
 
-import dev.augu.nino.butterfly.command.Command
 import dev.augu.nino.butterfly.command.CommandContext
+import dev.augu.nino.common.entities.ModerationCommand
 import dev.augu.nino.common.util.formatDurationLong
 import dev.augu.nino.common.util.parseDuration
 import dev.augu.nino.services.discord.IDiscordService
@@ -12,10 +12,9 @@ import java.time.Duration
 class BanCommand(
         private val moderationService: IModerationService,
         private val discordService: IDiscordService)
-    : Command(
+    : ModerationCommand(
         "ban",
-        "moderation",
-        guildOnly = true,
+        "Bans the user",
         userPermissions = Permission.BAN_MEMBERS.rawValue,
         botPermissions = Permission.BAN_MEMBERS.rawValue) {
 
