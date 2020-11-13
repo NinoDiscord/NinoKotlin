@@ -6,21 +6,16 @@ import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
 import net.dv8tion.jda.api.Permission
 
-class UnbanCommand(val discordService: IDiscordService, val moderationService: IModerationService) : ModerationCommand(
+class UnbanCommand(private val discordService: IDiscordService, private val moderationService: IModerationService) : ModerationCommand(
         "unban",
         "Unbans the user",
         userPermissions = Permission.BAN_MEMBERS.rawValue,
         botPermissions = Permission.BAN_MEMBERS.rawValue) {
 
     override suspend fun execute(ctx: CommandContext) {
-        if (ctx.args.isEmpty()) {
-            ctx.replyTranslate("unbanCommandInvalidArguments")
-            return
-        }
-
         val arguments = extractArguments(ctx.args)
 
-        if (arguments.userId == null) {
+        if (arguments == null) {
             ctx.replyTranslate("unbanCommandInvalidArguments")
             return
         }
@@ -48,10 +43,14 @@ class UnbanCommand(val discordService: IDiscordService, val moderationService: I
         // TODO("Add logging")
     }
 
-    private data class Arguments(val userId: String?, val reason: String?)
+    private data class Arguments(val userId: String, val reason: String?)
 
-    private fun extractArguments(args: Array<String>): Arguments {
-        val userToBanId = discordService.extractSnowflake(args[0])
+    private fun extractArguments(args: Array<String>): Arguments? {
+        if (args.isEmpty()) {
+            return null
+        }
+
+        val userToBanId = discordService.extractSnowflake(args[0]) ?: return null
         val reason = args.drop(1).joinToString(" ").trim()
 
         return Arguments(userToBanId, reason)

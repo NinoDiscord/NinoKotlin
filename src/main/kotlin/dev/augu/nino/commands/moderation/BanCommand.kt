@@ -19,14 +19,9 @@ class BanCommand(
         botPermissions = Permission.BAN_MEMBERS.rawValue) {
 
     override suspend fun execute(ctx: CommandContext) {
-        if (ctx.args.isEmpty()) {
-            ctx.replyTranslate("banCommandInvalidArguments")
-            return
-        }
-
         val arguments = extractArguments(ctx.args)
 
-        if (arguments.userId == null) {
+        if (arguments == null) {
             ctx.replyTranslate("banCommandInvalidArguments")
             return
         }
@@ -68,10 +63,14 @@ class BanCommand(
         // TODO("Add logging")
     }
 
-    private data class Arguments(val userId: String?, val reason: String?, val duration: Duration?)
+    private data class Arguments(val userId: String, val reason: String?, val duration: Duration?)
 
-    private fun extractArguments(args: Array<String>): Arguments {
-        val userToBanId = discordService.extractSnowflake(args[0])
+    private fun extractArguments(args: Array<String>): Arguments? {
+        if (args.isEmpty()) {
+            return null
+        }
+
+        val userToBanId = discordService.extractSnowflake(args[0]) ?: return null
         val reason = args.drop(1).joinToString(" ").takeWhile { char -> char != '|' }.trim()
         val duration = parseDuration(args.drop(1).joinToString(" ").dropWhile { char -> char != '|' }.trim())
 
