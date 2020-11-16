@@ -12,6 +12,8 @@ import dev.augu.nino.services.postgres.IPostgresService
 import dev.augu.nino.services.postgres.PostgresService
 import dev.augu.nino.services.redis.IRedisService
 import dev.augu.nino.services.redis.RedisService
+import dev.augu.nino.services.scheduler.ISchedulerService
+import dev.augu.nino.services.scheduler.SchedulerService
 import dev.augu.nino.services.settings.GuildSettingsService
 import dev.augu.nino.services.settings.IGuildSettingsService
 import org.koin.dsl.module
@@ -24,4 +26,5 @@ val serviceModule = module {
     single<IDiscordService> { DiscordService() }
     single<IGuildSettingsService> { GuildSettingsService(get(), get(), get()) }
     single<IMongoService> { MongoService(get()) }
+    single<ISchedulerService> { SchedulerService(get(), get()) }
 }
