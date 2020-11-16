@@ -47,6 +47,9 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:0.28.1")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.28.1")
 
+    // MongoDB
+    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.2.0")
+
     // Liquibase (Database Migration)
     liquibaseRuntime("org.liquibase:liquibase-core:3.8.1")
     liquibaseRuntime("org.liquibase:liquibase-groovy-dsl:2.1.1")

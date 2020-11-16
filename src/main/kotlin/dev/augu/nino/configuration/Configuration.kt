@@ -7,5 +7,6 @@ data class Configuration(
         val status: StatusConfig? = null,
         val base: BaseConfiguration,
         val redis: RedisConfiguration,
-        val postgres: PostgresConfiguration
+        val postgres: PostgresConfiguration,
+        val mongodb: MongoConfiguration
 )

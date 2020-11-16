@@ -6,6 +6,8 @@ import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.locale.LocaleService
 import dev.augu.nino.services.moderation.IModerationService
 import dev.augu.nino.services.moderation.ModerationService
+import dev.augu.nino.services.mongodb.IMongoService
+import dev.augu.nino.services.mongodb.MongoService
 import dev.augu.nino.services.postgres.IPostgresService
 import dev.augu.nino.services.postgres.PostgresService
 import dev.augu.nino.services.redis.IRedisService
@@ -21,4 +23,5 @@ val serviceModule = module {
     single<IModerationService> { ModerationService(get(), get()) }
     single<IDiscordService> { DiscordService() }
     single<IGuildSettingsService> { GuildSettingsService(get(), get(), get()) }
+    single<IMongoService> { MongoService(get()) }
 }
