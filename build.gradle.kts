@@ -3,8 +3,9 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
     kotlin("plugin.serialization") version "1.4.10"
-    kotlin("jvm") version "1.4.10"
+    id("com.diffplug.spotless") version "5.8.2"
     id("org.liquibase.gradle") version "2.0.4"
+    kotlin("jvm") version "1.4.10"
     application
 }
 
@@ -120,6 +121,36 @@ shadowJar.apply {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+spotless {
+    kotlin {
+        // Removes all trailing whitespace
+        trimTrailingWhitespace()
+
+        // End with a new line
+        endWithNewline()
+
+        // ktlint configuration
+        //
+        // Spotless won't load .editorconfig for the configuration
+        // so it's specified here.
+        // Read the issue here: https://github.com/diffplug/spotless/issues/142
+        ktlint()
+                .userData(mapOf(
+                        // https://ktlint.github.io/#rule-blank
+                        "no-consecutive-blank-lines" to "true",
+
+                        // Disallows `Unit` in return statements
+                        "no-unit-return" to "true",
+
+                        // Disable the wildcards import and colon spacing rule
+                        "disabled_rules" to "no-wildcard-imports,colon-spacing",
+
+                        // Set the indent size to 4
+                        "indent_size" to "4"
+                ))
+    }
 }
 
 class Version(
