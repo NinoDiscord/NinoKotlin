@@ -26,5 +26,5 @@ val serviceModule = module {
     single<IDiscordService> { DiscordService() }
     single<IGuildSettingsService> { GuildSettingsService(get(), get(), get()) }
     single<IMongoService> { MongoService(get()) }
-    single<ISchedulerService> { SchedulerService(get(), get()) }
+    single<ISchedulerService> { SchedulerService(get()) }
 }

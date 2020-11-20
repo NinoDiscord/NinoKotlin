@@ -1,6 +1,5 @@
 package dev.augu.nino.services.scheduler
 
-import dev.augu.nino.butterfly.ButterflyClient
 import dev.augu.nino.common.entities.Action
 import dev.augu.nino.services.mongodb.IMongoService
 import dev.augu.nino.services.scheduler.job.SchedulerJob
