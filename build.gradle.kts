@@ -50,6 +50,7 @@ dependencies {
 
     // MongoDB
     implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.2.0")
+    implementation("org.litote.kmongo:kmongo-id:4.2.0")
 
     // Liquibase (Database Migration)
     liquibaseRuntime("org.liquibase:liquibase-core:3.8.1")

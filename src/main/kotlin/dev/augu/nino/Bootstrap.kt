@@ -10,8 +10,13 @@ import dev.augu.nino.common.modules.commonModules
 import dev.augu.nino.common.util.createThread
 import dev.augu.nino.configuration.Configuration
 import dev.augu.nino.configuration.configurationModule
+import dev.augu.nino.services.scheduler.ISchedulerService
 import dev.augu.nino.services.serviceModule
 import java.io.File
+import java.util.concurrent.Executors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.launch
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
@@ -25,6 +30,7 @@ import org.slf4j.LoggerFactory
 class Bot: KoinComponent {
     private val client: ButterflyClient by inject()
     private val config: Configuration by inject()
+    private val schedulerService: ISchedulerService by inject()
     private val logger = LoggerFactory.getLogger(javaClass)
     private val jda: JDA by inject()
 
@@ -56,6 +62,10 @@ class Bot: KoinComponent {
                             config.status?.status ?: "${config.base.prefixes[0]}help | ${event.guildTotalCount} Guilds"
                     )
             )
+            logger.info("Loading scheduled jobs in the background...")
+            CoroutineScope(Executors.newSingleThreadExecutor().asCoroutineDispatcher()).launch {
+                schedulerService.loadAndScheduleAllJobs()
+            }
         }
 
         jda.on<DisconnectEvent>().subscribe { event ->
