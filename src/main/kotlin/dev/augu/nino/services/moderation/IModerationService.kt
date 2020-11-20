@@ -1,8 +1,8 @@
 package dev.augu.nino.services.moderation
 
+import java.time.Duration
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
-import java.time.Duration
 
 interface IModerationService {
     suspend fun ban(member: Member, reason: String?, delDays: Int?)

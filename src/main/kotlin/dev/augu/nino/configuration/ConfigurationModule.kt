@@ -1,8 +1,8 @@
 package dev.augu.nino.configuration
 
 import com.charleskorn.kaml.Yaml
-import org.koin.dsl.module
 import java.io.File
+import org.koin.dsl.module
 
 val configurationModule = module {
     single {

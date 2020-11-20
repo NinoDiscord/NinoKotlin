@@ -11,6 +11,7 @@ import dev.augu.nino.common.util.createThread
 import dev.augu.nino.configuration.Configuration
 import dev.augu.nino.configuration.configurationModule
 import dev.augu.nino.services.serviceModule
+import java.io.File
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
@@ -20,7 +21,6 @@ import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.inject
 import org.slf4j.LoggerFactory
-import java.io.File
 
 class Bot: KoinComponent {
     private val client: ButterflyClient by inject()

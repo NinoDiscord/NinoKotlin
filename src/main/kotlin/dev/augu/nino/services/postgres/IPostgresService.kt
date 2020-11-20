@@ -1,7 +1,7 @@
 package dev.augu.nino.services.postgres
 
-import org.jetbrains.exposed.sql.Database
 import java.sql.Connection
+import org.jetbrains.exposed.sql.Database
 
 interface IPostgresService {
 

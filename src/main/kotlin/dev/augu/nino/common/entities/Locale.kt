@@ -2,8 +2,8 @@ package dev.augu.nino.common.entities
 
 import com.charleskorn.kaml.Yaml
 import dev.augu.nino.butterfly.i18n.I18nLanguage
-import kotlinx.serialization.Serializable
 import java.io.File
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class Locale(

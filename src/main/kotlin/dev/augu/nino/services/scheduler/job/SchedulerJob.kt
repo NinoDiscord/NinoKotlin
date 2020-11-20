@@ -2,8 +2,8 @@ package dev.augu.nino.services.scheduler.job
 
 import dev.augu.nino.butterfly.ButterflyClient
 import dev.augu.nino.common.entities.Action
-import org.litote.kmongo.Id
 import java.time.Duration
+import org.litote.kmongo.Id
 
 interface SchedulerJob {
     var id: Id<SchedulerJob>

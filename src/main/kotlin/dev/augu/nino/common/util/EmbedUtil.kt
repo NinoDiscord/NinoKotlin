@@ -1,7 +1,7 @@
 package dev.augu.nino.common.util
 
-import net.dv8tion.jda.api.EmbedBuilder
 import java.awt.Color
+import net.dv8tion.jda.api.EmbedBuilder
 
 /**
  * Creates a structural embed with `block` being the embed content

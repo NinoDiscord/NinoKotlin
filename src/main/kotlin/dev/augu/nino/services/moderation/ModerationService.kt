@@ -6,10 +6,10 @@ import dev.augu.nino.services.scheduler.ISchedulerService
 import dev.augu.nino.services.scheduler.job.UnbanSchedulerJob
 import dev.augu.nino.services.scheduler.job.UnmuteSchedulerJob
 import dev.augu.nino.services.settings.IGuildSettingsService
+import java.time.Duration
 import kotlinx.coroutines.reactive.awaitSingleOrNull
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
-import java.time.Duration
 
 class ModerationService(private val discordService: IDiscordService, private val guildSettingsService: IGuildSettingsService, private val schedulerService: ISchedulerService) : IModerationService {
     override suspend fun ban(member: Member, reason: String?, delDays: Int?) {

@@ -6,8 +6,8 @@ import dev.augu.nino.common.util.formatDurationLong
 import dev.augu.nino.common.util.parseDuration
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
-import net.dv8tion.jda.api.Permission
 import java.time.Duration
+import net.dv8tion.jda.api.Permission
 
 class BanCommand(
     private val moderationService: IModerationService,

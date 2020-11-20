@@ -5,11 +5,11 @@ import dev.augu.nino.butterfly.i18n.I18nLanguage
 import dev.augu.nino.butterfly.util.edit
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.*
+import java.time.Instant
+import java.time.ZoneOffset
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import net.dv8tion.jda.api.entities.Message
-import java.time.Instant
-import java.time.ZoneOffset
 
 @ExperimentalCoroutinesApi
 class PingCommandTest : DescribeSpec({

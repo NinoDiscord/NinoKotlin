@@ -1,8 +1,8 @@
 package dev.augu.nino.common.modules
 
 import dev.augu.nino.common.entities.Locale
-import org.koin.dsl.module
 import java.io.File
+import org.koin.dsl.module
 
 val localeModule = module {
     factory<List<Locale>> {
