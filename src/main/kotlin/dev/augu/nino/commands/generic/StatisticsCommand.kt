@@ -3,12 +3,11 @@ package dev.augu.nino.commands.generic
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.GenericCommand
 import dev.augu.nino.common.formatBytes
-import dev.augu.nino.common.util.createEmbed
 import dev.augu.nino.common.humanize
+import dev.augu.nino.common.util.createEmbed
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDAInfo
 import java.lang.management.ManagementFactory
-import kotlin.KotlinVersion
 
 class StatisticsCommand(private val jda: JDA): GenericCommand(
         "statistics",

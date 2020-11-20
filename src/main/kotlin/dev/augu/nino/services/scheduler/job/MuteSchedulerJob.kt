@@ -11,12 +11,12 @@ import java.time.Instant
 
 @Serializable
 class MuteSchedulerJob(
-        override var _id: Id<SchedulerJob> = newId(),
-        override var startTime: Long = Instant.now().toEpochMilli(),
-        override var duration: Long,
-        override val targetUserId: String,
-        override val guildId: String,
-        val reason: String?
+    override var _id: Id<SchedulerJob> = newId(),
+    override var startTime: Long = Instant.now().toEpochMilli(),
+    override var duration: Long,
+    override val targetUserId: String,
+    override val guildId: String,
+    val reason: String?
 ) : SchedulerJob {
     override val action: Action = Action.MUTE
 

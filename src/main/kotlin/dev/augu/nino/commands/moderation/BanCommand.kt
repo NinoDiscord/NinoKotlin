@@ -10,8 +10,9 @@ import net.dv8tion.jda.api.Permission
 import java.time.Duration
 
 class BanCommand(
-        private val moderationService: IModerationService,
-        private val discordService: IDiscordService)
+    private val moderationService: IModerationService,
+    private val discordService: IDiscordService
+)
     : ModerationCommand(
         "ban",
         "Bans the user",

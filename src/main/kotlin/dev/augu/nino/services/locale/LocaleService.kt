@@ -5,8 +5,8 @@ import dev.augu.nino.configuration.Configuration
 import kotlin.math.roundToInt
 
 class LocaleService(
-        override val locales: List<Locale>,
-        config: Configuration
+    override val locales: List<Locale>,
+    config: Configuration
 ) : ILocaleService {
     override val defaultLocale: Locale = locales.first { it.code == config.base.defaultLanguage }
 

@@ -7,8 +7,9 @@ import dev.augu.nino.services.moderation.IModerationService
 import net.dv8tion.jda.api.Permission
 
 class SoftbanCommand(
-        private val moderationService: IModerationService,
-        private val discordService: IDiscordService)
+    private val moderationService: IModerationService,
+    private val discordService: IDiscordService
+)
     : ModerationCommand(
         "softban",
         "Bans the user and immediately unbans the user",

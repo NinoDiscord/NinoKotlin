@@ -2,7 +2,7 @@ package dev.augu.nino.commands.generic
 
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.butterfly.i18n.I18nLanguage
-import dev.augu.nino.butterfly.util.*
+import dev.augu.nino.butterfly.util.edit
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi

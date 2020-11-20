@@ -24,7 +24,6 @@ private class CustomGuildSettingsLoader(private val guildSettingsService: IGuild
                 guildSettingsService
         )
     }
-
 }
 
 val discordModule = module {

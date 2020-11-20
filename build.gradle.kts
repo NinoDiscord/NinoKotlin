@@ -82,16 +82,18 @@ application {
 liquibase {
     activities {
         create("main") {
-            val databaseJdbcUrl by project.extra.properties
-            val databaseUsername by project.extra.properties
-            val databasePassword by project.extra.properties
-            arguments = mapOf(
-                    "logLevel" to "info",
-                    "changeLogFile" to "src/main/resources/db/changelog.sql",
-                    "url" to databaseJdbcUrl,
-                    "username" to databaseUsername,
-                    "password" to databasePassword
-            )
+            if (project.extra.properties.containsKey("databaseJdbcUrl")) {
+                val databaseJdbcUrl by project.extra.properties
+                val databaseUsername by project.extra.properties
+                val databasePassword by project.extra.properties
+                arguments = mapOf(
+                        "logLevel" to "info",
+                        "changeLogFile" to "src/main/resources/db/changelog.sql",
+                        "url" to databaseJdbcUrl,
+                        "username" to databaseUsername,
+                        "password" to databasePassword
+                )
+            }
         }
     }
 }

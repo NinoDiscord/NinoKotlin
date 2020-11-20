@@ -22,7 +22,7 @@ class SchedulerService(mongoService: IMongoService, private val butterflyClient:
     private val scheduledJobs: ConcurrentHashMap<String, TimerTask> = ConcurrentHashMap()
     private val scheduledJobsIds: ConcurrentHashMap<String, String> = ConcurrentHashMap()
 
-    private fun specialKey(action: Action, targetUserId: String, guildId: String): String = "${action.name}:${targetUserId}:${guildId}"
+    private fun specialKey(action: Action, targetUserId: String, guildId: String): String = "${action.name}:$targetUserId:$guildId"
 
     override suspend fun scheduleJob(schedulerJob: SchedulerJob) {
         scheduledJobs[schedulerJob._id.toString()] = timer.schedule(schedulerJob.duration) { processJob(schedulerJob, butterflyClient) }

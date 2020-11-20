@@ -1,8 +1,8 @@
 package dev.augu.nino.commands.generic
 
 import dev.augu.nino.butterfly.command.CommandContext
-import dev.augu.nino.common.entities.GenericCommand
 import dev.augu.nino.butterfly.util.edit
+import dev.augu.nino.common.entities.GenericCommand
 
 class PingCommand: GenericCommand(
         "ping",

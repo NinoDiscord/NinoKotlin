@@ -11,8 +11,8 @@ import net.dv8tion.jda.api.Permission
 import java.time.Duration
 
 class MuteCommand(
-        private val discordService: IDiscordService,
-        private val moderationService: IModerationService
+    private val discordService: IDiscordService,
+    private val moderationService: IModerationService
 ) : ModerationCommand(
         "mute",
         "Mutes the user",
@@ -41,7 +41,6 @@ class MuteCommand(
             ctx.replyTranslate("unableToFindMember", mapOf("memberId" to arguments.userId))
             return
         }
-
 
         val settings = ctx.settings<NinoGuildSettings>()
 
@@ -83,5 +82,4 @@ class MuteCommand(
 
         return Arguments(userId, reason, duration)
     }
-
 }

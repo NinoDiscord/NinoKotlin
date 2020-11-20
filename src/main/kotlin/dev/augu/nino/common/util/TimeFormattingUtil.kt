@@ -59,7 +59,6 @@ fun formatDurationShort(duration: Duration): String {
     }
 
     return formattedStringBuilder.toString()
-
 }
 
 fun formatDurationLong(duration: Duration): String {

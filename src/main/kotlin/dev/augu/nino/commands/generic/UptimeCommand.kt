@@ -3,7 +3,6 @@ package dev.augu.nino.commands.generic
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.GenericCommand
 import dev.augu.nino.common.humanize
-
 import java.lang.management.ManagementFactory
 
 class UptimeCommand: GenericCommand(

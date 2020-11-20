@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class StatusConfig(
-        val status: String,
-        val type: Int
+    val status: String,
+    val type: Int
 )

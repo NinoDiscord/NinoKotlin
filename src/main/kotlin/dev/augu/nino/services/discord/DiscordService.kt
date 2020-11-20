@@ -65,6 +65,4 @@ class DiscordService : IDiscordService {
 
         return role
     }
-
-
 }

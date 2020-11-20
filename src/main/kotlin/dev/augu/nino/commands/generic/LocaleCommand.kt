@@ -6,7 +6,7 @@ import dev.augu.nino.common.util.createEmbed
 import dev.augu.nino.services.locale.ILocaleService
 
 class LocaleCommand(
-        private val locales: ILocaleService
+    private val locales: ILocaleService
 ): GenericCommand(
         "locale",
         "View, reset, or set the user/guild language.",
@@ -21,7 +21,7 @@ class LocaleCommand(
                     Guild Language: en_US
                     User Language : en_US
                     ```
-                    
+
                     • To view the list of languages available, use `x!locale list`
                     • To set a guild or user language, use `x!locale set`
                     • To reset a guild or user language, use `x!locale reset`

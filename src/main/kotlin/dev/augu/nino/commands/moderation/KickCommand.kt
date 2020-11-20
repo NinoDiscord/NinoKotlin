@@ -7,8 +7,9 @@ import dev.augu.nino.services.moderation.IModerationService
 import net.dv8tion.jda.api.Permission
 
 class KickCommand(
-        private val moderationService: IModerationService,
-        private val discordService: IDiscordService)
+    private val moderationService: IModerationService,
+    private val discordService: IDiscordService
+)
     : ModerationCommand(
         "kick",
         "Kicks the user",
