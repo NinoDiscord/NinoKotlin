@@ -23,7 +23,7 @@ class MongoPersistor(private val mongoService: IMongoService) {
     }
 
     suspend fun completeSchedulerJob(schedulerJob: SchedulerJob) {
-        collection.deleteOneById(schedulerJob._id)
+        collection.deleteOneById(schedulerJob.id)
     }
 
     suspend fun getAllScheduledJobs(): List<SchedulerJob> {

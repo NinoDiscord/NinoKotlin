@@ -6,7 +6,7 @@ import org.litote.kmongo.Id
 import java.time.Duration
 
 interface SchedulerJob {
-    var _id: Id<SchedulerJob>
+    var id: Id<SchedulerJob>
     val action: Action
     var startTime: Long
     var duration: Long
@@ -14,7 +14,7 @@ interface SchedulerJob {
     val guildId: String
 
     fun shouldBePersisted(): Boolean {
-        return duration > Duration.ofMinutes(15).toMillis()
+        return duration >= Duration.ofMinutes(15).toMillis()
     }
 
     suspend fun processJob(butterflyClient: ButterflyClient)

@@ -25,7 +25,7 @@ class SchedulerService(mongoService: IMongoService, private val butterflyClient:
     private fun specialKey(action: Action, targetUserId: String, guildId: String): String = "${action.name}:$targetUserId:$guildId"
 
     override suspend fun scheduleJob(schedulerJob: SchedulerJob) {
-        scheduledJobs[schedulerJob._id.toString()] = timer.schedule(schedulerJob.duration) { processJob(schedulerJob, butterflyClient) }
+        scheduledJobs[schedulerJob.id.toString()] = timer.schedule(schedulerJob.duration) { processJob(schedulerJob, butterflyClient) }
         scheduledJobsIds[specialKey(schedulerJob.action, schedulerJob.targetUserId, schedulerJob.guildId)]
 
         if (schedulerJob.shouldBePersisted()) {
@@ -49,7 +49,7 @@ class SchedulerService(mongoService: IMongoService, private val butterflyClient:
             val newDuration = schedulerJob.duration + schedulerJob.startTime - newStartTime
             schedulerJob.startTime = newStartTime
             schedulerJob.duration = newDuration
-            schedulerJob._id = newId()
+            schedulerJob.id = newId()
             scheduleJob(schedulerJob)
         }
     }

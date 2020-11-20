@@ -11,7 +11,7 @@ import java.time.Instant
 
 @Serializable
 data class BanSchedulerJob(
-    override var _id: Id<SchedulerJob> = newId(),
+    override var id: Id<SchedulerJob> = newId(),
     override var startTime: Long = Instant.now().toEpochMilli(),
     override var duration: Long,
     override val targetUserId: String,

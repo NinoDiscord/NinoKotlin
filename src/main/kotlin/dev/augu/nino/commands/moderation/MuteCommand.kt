@@ -30,7 +30,7 @@ class MuteCommand(
             return
         }
 
-        if (arguments.duration != null && (arguments.duration <= Duration.ofSeconds(15) || arguments.duration >= Duration.ofDays(7))) {
+        if (arguments.duration != null && (arguments.duration < Duration.ofSeconds(15) || arguments.duration > Duration.ofDays(7))) {
             ctx.replyTranslate("muteCommandInvalidDuration")
             return
         }
