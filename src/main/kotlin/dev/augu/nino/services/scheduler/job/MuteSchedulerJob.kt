@@ -10,16 +10,15 @@ import org.litote.kmongo.newId
 import java.time.Instant
 
 @Serializable
-data class BanSchedulerJob(
+class MuteSchedulerJob(
         override var _id: Id<SchedulerJob> = newId(),
         override var startTime: Long = Instant.now().toEpochMilli(),
         override var duration: Long,
         override val targetUserId: String,
         override val guildId: String,
-        val delDays: Int,
         val reason: String?
 ) : SchedulerJob {
-    override val action: Action = Action.BAN
+    override val action: Action = Action.MUTE
 
     override suspend fun processJob(butterflyClient: ButterflyClient) {
         val jda = butterflyClient.jda
@@ -27,6 +26,6 @@ data class BanSchedulerJob(
 
         val moderationService = KoinContextHandler.get().get<IModerationService>()
 
-        moderationService.ban(targetUserId, guild, reason, delDays)
+        moderationService.mute(targetUserId, guild, reason)
     }
 }

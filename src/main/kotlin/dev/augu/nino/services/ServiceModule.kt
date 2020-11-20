@@ -22,7 +22,7 @@ val serviceModule = module {
     single<ILocaleService> { LocaleService(get(), get()) }
     single<IRedisService> { RedisService(get()) }
     single<IPostgresService> { PostgresService(get()) }
-    single<IModerationService> { ModerationService(get(), get()) }
+    single<IModerationService> { ModerationService(get(), get(), get()) }
     single<IDiscordService> { DiscordService() }
     single<IGuildSettingsService> { GuildSettingsService(get(), get(), get()) }
     single<IMongoService> { MongoService(get()) }

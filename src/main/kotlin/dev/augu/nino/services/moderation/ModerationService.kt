@@ -2,13 +2,16 @@ package dev.augu.nino.services.moderation
 
 import club.minnced.jda.reactor.asMono
 import dev.augu.nino.services.discord.IDiscordService
+import dev.augu.nino.services.scheduler.ISchedulerService
+import dev.augu.nino.services.scheduler.job.UnbanSchedulerJob
+import dev.augu.nino.services.scheduler.job.UnmuteSchedulerJob
 import dev.augu.nino.services.settings.IGuildSettingsService
 import kotlinx.coroutines.reactive.awaitSingleOrNull
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import java.time.Duration
 
-class ModerationService(private val discordService: IDiscordService, private val guildSettingsService: IGuildSettingsService) : IModerationService {
+class ModerationService(private val discordService: IDiscordService, private val guildSettingsService: IGuildSettingsService, private val schedulerService: ISchedulerService) : IModerationService {
     override suspend fun ban(member: Member, reason: String?, delDays: Int?) {
         member.ban(delDays ?: 7, reason).asMono().awaitSingleOrNull()
     }
@@ -18,11 +21,13 @@ class ModerationService(private val discordService: IDiscordService, private val
     }
 
     override suspend fun tempban(member: Member, duration: Duration, reason: String?, delDays: Int?) {
-        TODO("Not yet implemented")
+        tempban(member.id, member.guild, duration, reason, delDays)
     }
 
     override suspend fun tempban(userId: String, guild: Guild, duration: Duration, reason: String?, delDays: Int?) {
-        //TODO("Not yet implemented")
+        ban(userId, guild, reason, delDays)
+
+        schedulerService.scheduleJob(UnbanSchedulerJob(duration = duration.toMillis(), targetUserId = userId, guildId = guild.id, reason = "Time's up!"))
     }
 
     override suspend fun kick(member: Member, reason: String?) {
@@ -66,11 +71,13 @@ class ModerationService(private val discordService: IDiscordService, private val
     }
 
     override suspend fun tempmute(member: Member, duration: Duration, reason: String?) {
-        TODO("Not yet implemented")
+        tempmute(member.id, member.guild, duration, reason)
     }
 
     override suspend fun tempmute(memberId: String, guild: Guild, duration: Duration, reason: String?) {
-        TODO("Not yet implemented")
+        mute(memberId, guild, reason)
+
+        schedulerService.scheduleJob(UnmuteSchedulerJob(duration = duration.toMillis(), targetUserId = memberId, guildId = guild.id, reason = "Time's up!"))
     }
 
     override suspend fun unmute(member: Member, reason: String?) {
