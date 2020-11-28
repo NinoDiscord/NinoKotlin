@@ -54,7 +54,7 @@ dependencies {
 
     // Liquibase (Database Migration)
     liquibaseRuntime("org.liquibase:liquibase-core:3.8.1")
-    liquibaseRuntime("org.liquibase:liquibase-groovy-dsl:2.1.1")
+    liquibaseRuntime("org.liquibase:liquibase-groovy-dsl:3.0.0")
     liquibaseRuntime("org.postgresql:postgresql:42.2.18")
     liquibaseRuntime("javax.xml.bind", "jaxb-api", "2.3.1")
 
