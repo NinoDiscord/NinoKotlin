@@ -23,3 +23,6 @@ CREATE TABLE ModLogSettings
     mod_log_channel_id   varchar(18),
     guild_log_channel_id varchar(18)
 );
+--changeset auguwu:4
+--the guild log channel will have its own table
+ALTER TABLE ModLogSettings DROP guild_log_channel_id;

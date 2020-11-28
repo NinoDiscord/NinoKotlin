@@ -17,6 +17,7 @@ class PostgresService(config: Configuration) : IPostgresService {
             it.password = postgresConfig.password
             it.schema = postgresConfig.schema ?: "public"
             it.driverClassName = "org.postgresql.Driver"
+
             it
         })
     }

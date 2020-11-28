@@ -5,6 +5,7 @@ import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.postgres.IPostgresService
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Role
+import net.dv8tion.jda.api.entities.TextChannel
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class GuildSettingsService(
@@ -22,8 +23,25 @@ class GuildSettingsService(
                         this.guildId = guildId
                         this.localeCode = localeService.defaultLocale.code
                     }
-        }
+            }
     }
+
+    override fun getModLogChannel(guildId: String): TextChannel? =
+        transaction(postgresService.database) {
+            val channelID = ModLogSettings
+                    .find { ModLogSettingsTable.guildID eq guildId }
+                    .firstOrNull()?.modLogChannel ?: return@transaction null
+
+            jda.getTextChannelById(channelID)
+        }
+
+    override fun setModLogChannel(channelId: String, guildId: String): Unit =
+        transaction(postgresService.database) {
+            ModLogSettings.new {
+                this.modLogChannel = channelId
+                this.guildID = guildId
+            }
+        }
 
     override fun getMutedRole(guildId: String): Role? {
         return transaction(postgresService.database) {
