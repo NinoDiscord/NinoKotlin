@@ -43,7 +43,7 @@ dependencies {
 
     // Postgres
     implementation("org.postgresql:postgresql:42.2.18")
-    implementation("com.zaxxer:HikariCP:3.4.1")
+    implementation("com.zaxxer:HikariCP:3.4.5")
     implementation("org.jetbrains.exposed:exposed-core:0.28.1")
     implementation("org.jetbrains.exposed:exposed-dao:0.28.1")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.28.1")
@@ -54,7 +54,7 @@ dependencies {
 
     // Liquibase (Database Migration)
     liquibaseRuntime("org.liquibase:liquibase-core:3.8.1")
-    liquibaseRuntime("org.liquibase:liquibase-groovy-dsl:2.1.1")
+    liquibaseRuntime("org.liquibase:liquibase-groovy-dsl:3.0.0")
     liquibaseRuntime("org.postgresql:postgresql:42.2.18")
     liquibaseRuntime("javax.xml.bind", "jaxb-api", "2.3.1")
 
