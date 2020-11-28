@@ -1,7 +1,9 @@
 package dev.augu.nino.services.scheduler.job
 
 import dev.augu.nino.common.entities.Action
+import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.moderation.IModerationService
+import dev.augu.nino.services.moderation.log.IModerationLogService
 import java.time.Instant
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
@@ -23,11 +25,15 @@ class KickSchedulerJob(
     override val action: Action = Action.KICK
 
     override suspend fun processJob() {
-        val jda = KoinContextHandler.get().get<JDA>()
+        val koin = KoinContextHandler.get()
+        val jda = koin.get<JDA>()
         val guild = jda.getGuildById(guildId) ?: return
 
-        val moderationService = KoinContextHandler.get().get<IModerationService>()
+        val moderationService = koin.get<IModerationService>()
 
         moderationService.kick(targetUserId, guild, reason)
+
+        val case = koin.get<ICaseService>().createKickCase(targetUserId, jda.selfUser.id, null, Instant.now(), null, guildId, false, reason, null)
+        koin.get<IModerationLogService>().log(case)
     }
 }

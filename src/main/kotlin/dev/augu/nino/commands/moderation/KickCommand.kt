@@ -2,13 +2,18 @@ package dev.augu.nino.commands.moderation
 
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.ModerationCommand
+import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
+import dev.augu.nino.services.moderation.log.IModerationLogService
+import java.time.Instant
 import net.dv8tion.jda.api.Permission
 
 class KickCommand(
     private val moderationService: IModerationService,
-    private val discordService: IDiscordService
+    private val discordService: IDiscordService,
+    private val caseService: ICaseService,
+    private val moderationLogService: IModerationLogService
 )
     : ModerationCommand(
         "kick",
@@ -38,7 +43,8 @@ class KickCommand(
             ctx.replyTranslate("kickCommandSuccessReason", mapOf("user" to memberToKick.user.name, "reason" to arguments.reason))
         }
 
-        // TODO("Add logging")
+        val case = caseService.createKickCase(memberToKick.id, ctx.author.id, null, Instant.now(), null, ctx.guild!!.id, false, arguments.reason, null)
+        moderationLogService.log(case)
     }
 
     private data class Arguments(val userId: String, val reason: String?)

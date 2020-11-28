@@ -26,3 +26,10 @@ CREATE TABLE ModLogSettings
 --changeset auguwu:4
 --the guild log channel will have its own table
 ALTER TABLE ModLogSettings DROP guild_log_channel_id;
+--changeset oded.shapira:5
+CREATE TABLE CaseIds
+(
+    id serial primary key,
+    guild_id varchar(18) unique,
+    last_case_id int
+)

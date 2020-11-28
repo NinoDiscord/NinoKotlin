@@ -4,17 +4,24 @@ import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.butterfly.i18n.I18nLanguage
 import dev.augu.nino.butterfly.util.edit
 import io.kotest.core.spec.style.DescribeSpec
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.spyk
 import java.time.Instant
 import java.time.ZoneOffset
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Message
 
 @ExperimentalCoroutinesApi
 class PingCommandTest : DescribeSpec({
     describe("Integration Tests - Ping Command") {
-        val cmd = spyk(PingCommand())
+        val jda = mockk<JDA>()
+        val cmd = spyk(PingCommand(jda))
         val language = I18nLanguage("", mapOf(
                 "pingCommandOldMessage" to "Calculating...",
                 "pingCommandNewMessage" to "Shard \${id} | Ping: \${messageLatency}ms | Websocket: \${shard}ms"
@@ -28,8 +35,8 @@ class PingCommandTest : DescribeSpec({
 
             every { ctx.message.timeCreated } returns instant.atOffset(ZoneOffset.UTC)
             coEvery { ctx.language() } returns language
-            every { ctx.client.jda.shardInfo.shardId } returns 0
-            every { ctx.client.jda.gatewayPing } returns 55
+            every { jda.shardInfo.shardId } returns 0
+            every { jda.gatewayPing } returns 55
             coEvery { ctx.reply(any<CharSequence>()) } returns sampleMsg
             coEvery { ctx.replyTranslate(any()) } coAnswers {
                 ctx.reply(language.translate(it.invocation.args[0] as String))

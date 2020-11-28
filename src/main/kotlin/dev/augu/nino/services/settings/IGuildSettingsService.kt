@@ -14,4 +14,6 @@ interface IGuildSettingsService {
     fun getMutedRole(guildId: String): Role?
 
     fun setMutedRole(roleId: String, guildId: String)
+
+    fun incrementAndGetLastCaseId(guildId: String): Int
 }

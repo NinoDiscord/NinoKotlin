@@ -1,6 +1,13 @@
 package dev.augu.nino.services.settings
 
-import dev.augu.nino.common.entities.database.*
+import dev.augu.nino.common.entities.database.CaseId
+import dev.augu.nino.common.entities.database.CaseIds
+import dev.augu.nino.common.entities.database.GuildGeneralSettings
+import dev.augu.nino.common.entities.database.GuildGeneralSettingsTable
+import dev.augu.nino.common.entities.database.ModLogSettings
+import dev.augu.nino.common.entities.database.ModLogSettingsTable
+import dev.augu.nino.common.entities.database.MutedRole
+import dev.augu.nino.common.entities.database.MutedRoles
 import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.postgres.IPostgresService
 import net.dv8tion.jda.api.JDA
@@ -56,6 +63,23 @@ class GuildSettingsService(
             MutedRole.new {
                 this.guildId = guildId
                 this.mutedRoleId = roleId
+            }
+        }
+    }
+
+    override fun incrementAndGetLastCaseId(guildId: String): Int {
+        return transaction(postgresService.database) {
+            val caseId = CaseId.find { CaseIds.guildId eq guildId }.firstOrNull()
+
+            if (caseId != null) {
+                caseId.lastCaseId++
+                caseId.flush()
+                caseId.lastCaseId
+            } else {
+                CaseId.new {
+                    this.guildId = guildId
+                    this.lastCaseId = 1
+                }.lastCaseId
             }
         }
     }

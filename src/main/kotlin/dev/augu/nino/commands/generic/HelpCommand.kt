@@ -4,6 +4,7 @@ import dev.augu.nino.butterfly.ButterflyClient
 import dev.augu.nino.butterfly.command.Command
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.GenericCommand
+import dev.augu.nino.common.entities.NinoGuildSettings
 import dev.augu.nino.common.util.createEmbed
 import net.dv8tion.jda.api.Permission
 
@@ -13,7 +14,8 @@ class HelpCommand(private val client: ButterflyClient): GenericCommand(
         "halp", "h", "cmds", "commands", "?"
 ) {
     override suspend fun execute(ctx: CommandContext) {
-        val prefix = client.guildSettingsLoader.load(ctx.guild!!)?.prefix ?: "x!"
+        val settings = ctx.settings<NinoGuildSettings>()
+        val prefix = settings?.prefix ?: "x!"
 
         if (ctx.args.isEmpty()) {
             return sendCommandList(prefix, ctx)

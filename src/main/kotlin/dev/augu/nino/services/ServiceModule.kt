@@ -1,11 +1,15 @@
 package dev.augu.nino.services
 
+import dev.augu.nino.services.cases.CaseService
+import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.discord.DiscordService
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.locale.LocaleService
 import dev.augu.nino.services.moderation.IModerationService
 import dev.augu.nino.services.moderation.ModerationService
+import dev.augu.nino.services.moderation.log.IModerationLogService
+import dev.augu.nino.services.moderation.log.ModerationLogService
 import dev.augu.nino.services.mongodb.IMongoService
 import dev.augu.nino.services.mongodb.MongoService
 import dev.augu.nino.services.postgres.IPostgresService
@@ -23,8 +27,10 @@ val serviceModule = module {
     single<IRedisService> { RedisService(get()) }
     single<IPostgresService> { PostgresService(get()) }
     single<IModerationService> { ModerationService(get(), get(), get()) }
-    single<IDiscordService> { DiscordService() }
+    single<IDiscordService> { DiscordService(get()) }
     single<IGuildSettingsService> { GuildSettingsService(get(), get(), get()) }
     single<IMongoService> { MongoService(get()) }
     single<ISchedulerService> { SchedulerService(get()) }
+    single<ICaseService> { CaseService(get(), get()) }
+    single<IModerationLogService> { ModerationLogService(get(), get()) }
 }

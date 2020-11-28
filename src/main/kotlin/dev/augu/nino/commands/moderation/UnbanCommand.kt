@@ -2,11 +2,19 @@ package dev.augu.nino.commands.moderation
 
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.ModerationCommand
+import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
+import dev.augu.nino.services.moderation.log.IModerationLogService
+import java.time.Instant
 import net.dv8tion.jda.api.Permission
 
-class UnbanCommand(private val discordService: IDiscordService, private val moderationService: IModerationService) : ModerationCommand(
+class UnbanCommand(
+    private val discordService: IDiscordService,
+    private val moderationService: IModerationService,
+    private val caseService: ICaseService,
+    private val moderationLogService: IModerationLogService
+) : ModerationCommand(
         "unban",
         "Unbans the user",
         userPermissions = Permission.BAN_MEMBERS.rawValue,
@@ -20,7 +28,7 @@ class UnbanCommand(private val discordService: IDiscordService, private val mode
             return
         }
 
-        val userToUnban = discordService.extractUserFromId(arguments.userId, ctx.message.jda)
+        val userToUnban = discordService.extractUserFromId(arguments.userId)
 
         if (userToUnban == null) {
             ctx.replyTranslate("unableToFindUser", mapOf("userId" to arguments.userId))
@@ -40,7 +48,8 @@ class UnbanCommand(private val discordService: IDiscordService, private val mode
             ctx.replyTranslate("unbanCommandSuccessReason", mapOf("user" to userToUnban.name, "reason" to arguments.reason, "prefix" to ctx.prefix))
         }
 
-        // TODO("Add logging")
+        val case = caseService.createUnbanCase(userToUnban.id, ctx.author.id, null, Instant.now(), null, ctx.guild!!.id, false, arguments.reason, null)
+        moderationLogService.log(case)
     }
 
     private data class Arguments(val userId: String, val reason: String?)

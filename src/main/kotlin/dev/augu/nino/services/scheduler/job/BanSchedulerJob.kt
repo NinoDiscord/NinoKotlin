@@ -1,7 +1,9 @@
 package dev.augu.nino.services.scheduler.job
 
 import dev.augu.nino.common.entities.Action
+import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.moderation.IModerationService
+import dev.augu.nino.services.moderation.log.IModerationLogService
 import java.time.Instant
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
@@ -24,11 +26,15 @@ data class BanSchedulerJob(
     override val action: Action = Action.BAN
 
     override suspend fun processJob() {
-        val jda = KoinContextHandler.get().get<JDA>()
+        val koin = KoinContextHandler.get()
+        val jda = koin.get<JDA>()
         val guild = jda.getGuildById(guildId) ?: return
 
-        val moderationService = KoinContextHandler.get().get<IModerationService>()
+        val moderationService = koin.get<IModerationService>()
 
         moderationService.ban(targetUserId, guild, reason, delDays)
+
+        val case = koin.get<ICaseService>().createBanCase(targetUserId, jda.selfUser.id, null, Instant.now(), null, guildId, false, reason, null, null, false)
+        koin.get<IModerationLogService>().log(case)
     }
 }

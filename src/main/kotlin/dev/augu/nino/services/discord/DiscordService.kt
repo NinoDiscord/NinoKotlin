@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.requests.ErrorResponse
 
 private val SNOWFLAKE_REGEX = Regex("(?:<@!?)?(\\d+)(?:>)?")
 
-class DiscordService : IDiscordService {
+class DiscordService(private val jda: JDA) : IDiscordService {
 
     override fun extractSnowflake(text: String): String? {
         return SNOWFLAKE_REGEX.find(text)?.groupValues?.get(1)
@@ -28,7 +28,7 @@ class DiscordService : IDiscordService {
         }
     }
 
-    override suspend fun extractUserFromId(userId: String, jda: JDA): User? {
+    override suspend fun extractUserFromId(userId: String): User? {
         return try {
             jda.getUserById(userId) ?: jda.retrieveUserById(userId).asMono().awaitSingle()
         } catch (e: ErrorResponseException) {

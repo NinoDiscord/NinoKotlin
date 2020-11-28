@@ -4,14 +4,19 @@ import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.ModerationCommand
 import dev.augu.nino.common.util.formatDurationLong
 import dev.augu.nino.common.util.parseDuration
+import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
+import dev.augu.nino.services.moderation.log.IModerationLogService
 import java.time.Duration
+import java.time.Instant
 import net.dv8tion.jda.api.Permission
 
 class BanCommand(
     private val moderationService: IModerationService,
-    private val discordService: IDiscordService
+    private val discordService: IDiscordService,
+    private val caseService: ICaseService,
+    private val moderationLogService: IModerationLogService
 )
     : ModerationCommand(
         "ban",
@@ -32,7 +37,7 @@ class BanCommand(
             return
         }
 
-        val userToBan = discordService.extractUserFromId(arguments.userId, ctx.message.jda)
+        val userToBan = discordService.extractUserFromId(arguments.userId)
 
         if (userToBan == null) {
             ctx.replyTranslate("unableToFindUser", mapOf("userId" to arguments.userId))
@@ -61,7 +66,9 @@ class BanCommand(
                 ctx.replyTranslate("banCommandSuccessReasonTime", mapOf("user" to userToBan.name, "duration" to formatDurationLong(arguments.duration), "reason" to arguments.reason))
             }
         }
-        // TODO("Add logging")
+
+        val case = caseService.createBanCase(userToBan.id, ctx.author.id, null, Instant.now(), null, ctx.guild!!.id, false, arguments.reason, null, arguments.duration?.toMillis(), false)
+        moderationLogService.log(case)
     }
 
     private data class Arguments(val userId: String, val reason: String?, val duration: Duration?)

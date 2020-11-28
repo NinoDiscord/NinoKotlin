@@ -7,7 +7,7 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Column
 
 object ModLogSettingsTable: IntIdTable() {
-    val modLogChannel: Column<String> = varchar("mod_log_channel", 18)
+    val modLogChannel: Column<String> = varchar("mod_log_channel_id", 18)
     val guildID: Column<String> = varchar("guild_id", 18).uniqueIndex()
 }
 

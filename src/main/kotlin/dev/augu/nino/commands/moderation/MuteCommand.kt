@@ -5,14 +5,19 @@ import dev.augu.nino.common.entities.ModerationCommand
 import dev.augu.nino.common.entities.NinoGuildSettings
 import dev.augu.nino.common.util.formatDurationLong
 import dev.augu.nino.common.util.parseDuration
+import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
+import dev.augu.nino.services.moderation.log.IModerationLogService
 import java.time.Duration
+import java.time.Instant
 import net.dv8tion.jda.api.Permission
 
 class MuteCommand(
     private val discordService: IDiscordService,
-    private val moderationService: IModerationService
+    private val moderationService: IModerationService,
+    private val caseService: ICaseService,
+    private val moderationLogService: IModerationLogService
 ) : ModerationCommand(
         "mute",
         "Mutes the user",
@@ -66,7 +71,9 @@ class MuteCommand(
                 ctx.replyTranslate("muteCommandSuccessReasonTime", mapOf("user" to memberToMute.user.name, "duration" to formatDurationLong(arguments.duration), "reason" to arguments.reason))
             }
         }
-        // TODO("Add logging")
+
+        val case = caseService.createMuteCase(memberToMute.id, ctx.author.id, null, Instant.now(), null, ctx.guild!!.id, false, arguments.reason, null, arguments.duration?.toMillis())
+        moderationLogService.log(case)
     }
 
     private data class Arguments(val userId: String, val reason: String?, val duration: Duration?)

@@ -1,6 +1,9 @@
 package dev.augu.nino.common.util
 
+import java.text.SimpleDateFormat
 import java.time.Duration
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 val FORMAT_REGEX = Regex("""(?:(?:(?:(\d+)d)|(?:(\d+)h)|(?:(\d+)m)|(?:(\d+)s))\s*)+""")
@@ -107,4 +110,8 @@ fun formatDurationLong(duration: Duration): String {
     }
 
     return formattedStringBuilder.toString()
+}
+
+fun formatDateLong(dateTime: OffsetDateTime): String {
+    return dateTime.format(DateTimeFormatter.ofPattern(SimpleDateFormat("dd.MM.yyyy 'at' HH:mm:ss 'UTC'").toPattern()))
 }
