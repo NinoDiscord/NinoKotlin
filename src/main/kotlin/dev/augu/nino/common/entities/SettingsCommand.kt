@@ -7,7 +7,7 @@ abstract class SettingsCommand(name: String, description: String, vararg aliases
         name,
         "settings",
         *aliases,
-        description=description,
-        userPermissions=Permission.getRaw(Permission.MANAGE_SERVER),
-        botPermissions=botPermissions
+        description = description,
+        userPermissions = Permission.getRaw(Permission.MANAGE_SERVER),
+        botPermissions = botPermissions
 )

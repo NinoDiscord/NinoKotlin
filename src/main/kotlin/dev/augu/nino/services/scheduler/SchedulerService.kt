@@ -46,7 +46,7 @@ class SchedulerService(mongoService: IMongoService) : ISchedulerService {
             val newStartTime = Instant.now()
             val newDuration = schedulerJob.duration + schedulerJob.startTime.toEpochMilli() - newStartTime.toEpochMilli()
 
-            scheduledJobs[schedulerJob.id.toString()] = timer.schedule(newDuration) { processJob(schedulerJob) }
+            scheduledJobs[schedulerJob.id.toString()] = timer.schedule(newDuration.coerceAtLeast(0)) { processJob(schedulerJob) }
             scheduledJobsIds[specialKey(schedulerJob.action, schedulerJob.targetUserId, schedulerJob.guildId)]
         }
     }
