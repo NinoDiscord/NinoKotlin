@@ -7,3 +7,9 @@ base:
     - x!
     - nino!
   defaultLanguage: en_US
+redis:
+  # Option 1
+  url: "redis url"
+
+  # Option 2
+  
