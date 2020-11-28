@@ -1,13 +1,11 @@
 package dev.augu.nino.services.settings
 
-import dev.augu.nino.common.entities.database.GuildGeneralSettings
-import dev.augu.nino.common.entities.database.GuildGeneralSettingsTable
-import dev.augu.nino.common.entities.database.MutedRole
-import dev.augu.nino.common.entities.database.MutedRoles
+import dev.augu.nino.common.entities.database.*
 import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.postgres.IPostgresService
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Role
+import net.dv8tion.jda.api.entities.TextChannel
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class GuildSettingsService(

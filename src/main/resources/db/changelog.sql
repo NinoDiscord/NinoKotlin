@@ -15,3 +15,11 @@ CREATE TABLE MutedRoles
     guild_id      varchar(18) unique,
     muted_role_id varchar(18) unique
 );
+--changeset auguwu:3
+CREATE TABLE ModLogSettings
+(
+    id                   serial primary key,
+    guild_id             varchar(18) unique,
+    mod_log_channel_id   varchar(18),
+    guild_log_channel_id varchar(18)
+);
