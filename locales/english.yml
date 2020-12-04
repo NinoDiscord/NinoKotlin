@@ -40,3 +40,8 @@ translations:
   unmuteCommandNotMuted: "User is not muted in this guild"
   unmuteCommandSuccess: "Successfully unmuted user ${user}"
   unmuteCommandSuccessReason: "Successfully unmuted user ${user}. With reason: ${reason}"
+  reasonCommandNoArgs: "What case should I edit the reason to?"
+  reasonCommandInvalidCase: "Case **${caseID}** was not a valid number."
+  reasonCommandNoCaseFound: "Case ${caseID} was not found."
+  reasonCommandUpdated: ":ok_hand: Updated case #**${caseID}**'s reason to *${reason}*"
+
