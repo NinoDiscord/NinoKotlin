@@ -32,7 +32,7 @@ class ReasonCommand(private val cases: ICaseService): ModerationCommand(
         }
 
         // fuck how do i update it in the db?
-        ctx.replyTranslate("reasonCommandUpdatedReason", mapOf(
+        ctx.replyTranslate("reasonCommandUpdated", mapOf(
             "reason" to args.reason,
             "caseID" to args.caseID.toString())
         )
