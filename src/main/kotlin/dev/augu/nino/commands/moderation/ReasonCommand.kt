@@ -46,7 +46,7 @@ class ReasonCommand(private val cases: ICaseService): ModerationCommand(
         val caseID = try {
             Integer.parseInt(args[0])
         } catch (ex: Exception) {
-            return null
+            null
         }
 
         val reason = args.drop(1).joinToString(" ").trim()
