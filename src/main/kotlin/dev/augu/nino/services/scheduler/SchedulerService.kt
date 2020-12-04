@@ -4,15 +4,16 @@ import dev.augu.nino.common.entities.Action
 import dev.augu.nino.services.mongodb.IMongoService
 import dev.augu.nino.services.scheduler.job.SchedulerJob
 import dev.augu.nino.services.scheduler.persistance.MongoPersistor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.launch
+import java.lang.Long.max
 import java.time.Instant
 import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import kotlin.concurrent.schedule
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.launch
 
 class SchedulerService(mongoService: IMongoService) : ISchedulerService {
     private val mongoPersistor = MongoPersistor(mongoService)
@@ -23,8 +24,10 @@ class SchedulerService(mongoService: IMongoService) : ISchedulerService {
 
     private fun specialKey(action: Action, targetUserId: String, guildId: String): String = "${action.name}:$targetUserId:$guildId"
 
+    private fun calculateDuration(startTime: Long, duration: Long) = max(0, startTime - Instant.now().toEpochMilli() + duration)
+
     override suspend fun scheduleJob(schedulerJob: SchedulerJob) {
-        scheduledJobs[schedulerJob.id.toString()] = timer.schedule(schedulerJob.duration) { processJob(schedulerJob) }
+        scheduledJobs[schedulerJob.id.toString()] = timer.schedule(calculateDuration(schedulerJob.startTime.toEpochMilli(), schedulerJob.duration)) { processJob(schedulerJob) }
         scheduledJobsIds[specialKey(schedulerJob.action, schedulerJob.targetUserId, schedulerJob.guildId)]
 
         if (schedulerJob.shouldBePersisted()) {
@@ -43,10 +46,9 @@ class SchedulerService(mongoService: IMongoService) : ISchedulerService {
 
     override suspend fun loadAndScheduleAllJobs() {
         for (schedulerJob in mongoPersistor.getAllScheduledJobs()) {
-            val newStartTime = Instant.now()
-            val newDuration = schedulerJob.duration + schedulerJob.startTime.toEpochMilli() - newStartTime.toEpochMilli()
+            val newDuration = calculateDuration(schedulerJob.startTime.toEpochMilli(), schedulerJob.duration)
 
-            scheduledJobs[schedulerJob.id.toString()] = timer.schedule(newDuration.coerceAtLeast(0)) { processJob(schedulerJob) }
+            scheduledJobs[schedulerJob.id.toString()] = timer.schedule(newDuration) { processJob(schedulerJob) }
             scheduledJobsIds[specialKey(schedulerJob.action, schedulerJob.targetUserId, schedulerJob.guildId)]
         }
     }

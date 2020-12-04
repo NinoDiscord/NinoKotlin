@@ -1,20 +1,24 @@
 package dev.augu.nino.commands.moderation
 
 import dev.augu.nino.butterfly.command.CommandContext
+import dev.augu.nino.common.entities.Action
 import dev.augu.nino.common.entities.ModerationCommand
 import dev.augu.nino.common.entities.NinoGuildSettings
 import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
 import dev.augu.nino.services.moderation.log.IModerationLogService
+import dev.augu.nino.services.scheduler.ISchedulerService
 import java.time.Instant
 import net.dv8tion.jda.api.Permission
+import net.dv8tion.jda.api.entities.Member
 
 class UnmuteCommand(
     private val discordService: IDiscordService,
     private val moderationService: IModerationService,
     private val caseService: ICaseService,
-    private val moderationLogService: IModerationLogService
+    private val moderationLogService: IModerationLogService,
+    private val schedulerService: ISchedulerService
 ) : ModerationCommand(
         "unmute",
         "Unmutes the user",
@@ -51,8 +55,20 @@ class UnmuteCommand(
             ctx.replyTranslate("unmuteCommandSuccessReason", mapOf("user" to memberToUnmute.user.name, "reason" to arguments.reason, "prefix" to ctx.prefix))
         }
 
+        resolveRelatedMuteCase(ctx, memberToUnmute)
+
+        schedulerService.stopScheduledJob(Action.UNMUTE, memberToUnmute.id, ctx.guild!!.id)
+
         val case = caseService.createUnmuteCase(memberToUnmute.id, ctx.author.id, null, Instant.now(), null, ctx.guild!!.id, false, arguments.reason, null)
         moderationLogService.log(case)
+    }
+
+    private suspend fun resolveRelatedMuteCase(ctx: CommandContext, memberToUnmute: Member) {
+        val resolvingCase = caseService.findLastCaseByActionAndUser(ctx.guild!!.id, Action.MUTE, memberToUnmute.id)
+        if (resolvingCase != null) {
+            caseService.resolveCase(resolvingCase)
+            moderationLogService.updateLog(resolvingCase)
+        }
     }
 
     private data class Arguments(val userId: String, val reason: String?)

@@ -38,6 +38,10 @@ fun parseDuration(text: String): Duration? {
 }
 
 fun formatDurationShort(duration: Duration): String {
+    if (duration.isZero) {
+        return "0s"
+    }
+
     val days = duration.toDaysPart()
     val hours = duration.toHoursPart()
     val minutes = duration.toMinutesPart()
@@ -65,6 +69,10 @@ fun formatDurationShort(duration: Duration): String {
 }
 
 fun formatDurationLong(duration: Duration): String {
+    if (duration.isZero) {
+        return "0 seconds"
+    }
+
     val days = duration.toDaysPart()
     val hours = duration.toHoursPart()
     val minutes = duration.toMinutesPart()

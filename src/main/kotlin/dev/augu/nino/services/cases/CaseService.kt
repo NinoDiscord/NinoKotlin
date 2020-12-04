@@ -9,12 +9,12 @@ import dev.augu.nino.common.entities.cases.UnbanCase
 import dev.augu.nino.common.entities.cases.UnmuteCase
 import dev.augu.nino.services.mongodb.IMongoService
 import dev.augu.nino.services.settings.IGuildSettingsService
-import java.time.Instant
 import org.litote.kmongo.coroutine.aggregate
 import org.litote.kmongo.descending
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 import org.litote.kmongo.sort
+import java.time.Instant
 
 class CaseService(private val mongoService: IMongoService, private val guildSettingsService: IGuildSettingsService) :
     ICaseService {
@@ -22,7 +22,7 @@ class CaseService(private val mongoService: IMongoService, private val guildSett
         get() = mongoService.database.getCollection<Case>()
 
     override suspend fun getCase(caseId: Int, guildId: String): Case? {
-        return collection.find(Case::id eq caseId, Case::guildId eq guildId).first()
+        return collection.find(Case::caseId eq caseId, Case::guildId eq guildId).first()
     }
 
     override suspend fun updateCase(case: Case) {
@@ -40,10 +40,11 @@ class CaseService(private val mongoService: IMongoService, private val guildSett
             .aggregate<Case>(
                 match(
                     Case::guildId eq guildId,
-                    Case::targetUserId eq userId
+                    Case::targetUserId eq userId,
+                    Case::action eq action
                 ),
                 sort(
-                    descending(Case::id)
+                    descending(Case::caseId)
                 )
             ).first()
     }
