@@ -9,12 +9,12 @@ import dev.augu.nino.common.entities.cases.UnbanCase
 import dev.augu.nino.common.entities.cases.UnmuteCase
 import dev.augu.nino.services.mongodb.IMongoService
 import dev.augu.nino.services.settings.IGuildSettingsService
+import java.time.Instant
 import org.litote.kmongo.coroutine.aggregate
 import org.litote.kmongo.descending
 import org.litote.kmongo.eq
 import org.litote.kmongo.match
 import org.litote.kmongo.sort
-import java.time.Instant
 
 class CaseService(private val mongoService: IMongoService, private val guildSettingsService: IGuildSettingsService) :
     ICaseService {

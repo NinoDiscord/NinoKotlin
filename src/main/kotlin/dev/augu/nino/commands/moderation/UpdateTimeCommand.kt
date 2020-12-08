@@ -13,9 +13,9 @@ import dev.augu.nino.services.moderation.log.IModerationLogService
 import dev.augu.nino.services.scheduler.ISchedulerService
 import dev.augu.nino.services.scheduler.job.UnbanSchedulerJob
 import dev.augu.nino.services.scheduler.job.UnmuteSchedulerJob
-import net.dv8tion.jda.api.Permission
 import java.time.Duration
 import java.time.Instant
+import net.dv8tion.jda.api.Permission
 
 class UpdateTimeCommand(private val caseService: ICaseService, private val logService: IModerationLogService, private val schedulerService: ISchedulerService): ModerationCommand(
     "updatetime",

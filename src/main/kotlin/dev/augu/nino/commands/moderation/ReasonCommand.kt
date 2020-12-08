@@ -4,8 +4,8 @@ import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.ModerationCommand
 import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.moderation.log.IModerationLogService
-import net.dv8tion.jda.api.Permission
 import java.time.Instant
+import net.dv8tion.jda.api.Permission
 
 class ReasonCommand(private val caseService: ICaseService, private val logService: IModerationLogService): ModerationCommand(
     "reason",

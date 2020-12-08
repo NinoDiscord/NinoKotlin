@@ -8,9 +8,9 @@ import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
 import dev.augu.nino.services.moderation.log.IModerationLogService
 import dev.augu.nino.services.scheduler.ISchedulerService
+import java.time.Instant
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.User
-import java.time.Instant
 
 class UnbanCommand(
     private val discordService: IDiscordService,
