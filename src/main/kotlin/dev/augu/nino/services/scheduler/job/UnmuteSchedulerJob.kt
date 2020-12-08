@@ -9,13 +9,14 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.dv8tion.jda.api.JDA
+import org.bson.codecs.pojo.annotations.BsonId
 import org.koin.core.context.KoinContextHandler
 import org.litote.kmongo.Id
 import org.litote.kmongo.newId
 
 @Serializable
 class UnmuteSchedulerJob(
-    @Contextual @SerialName("_id") override val id: Id<SchedulerJob> = newId(),
+    @Contextual @BsonId @SerialName("_id") override val id: Id<SchedulerJob> = newId(),
     @Contextual override val startTime: Instant = Instant.now(),
     override val duration: Long,
     override val targetUserId: String,

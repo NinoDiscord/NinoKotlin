@@ -3,7 +3,7 @@ package dev.augu.nino.common.util
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldBeEmpty
+import io.kotest.matchers.string.shouldNotBeEmpty
 import java.time.Duration
 
 class TimeFormattingUtilTest : DescribeSpec({
@@ -47,7 +47,7 @@ class TimeFormattingUtilTest : DescribeSpec({
 
             formatDurationLong(threeDaysFourHoursAndThirtyFiveSeconds).shouldBe("3 days, 4 hours, 35 seconds")
 
-            formatDurationLong(Duration.ZERO).shouldBeEmpty()
+            formatDurationLong(Duration.ZERO).shouldNotBeEmpty()
         }
     }
 })

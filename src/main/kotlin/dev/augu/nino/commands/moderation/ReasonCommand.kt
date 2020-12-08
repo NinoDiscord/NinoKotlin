@@ -3,9 +3,11 @@ package dev.augu.nino.commands.moderation
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.ModerationCommand
 import dev.augu.nino.services.cases.ICaseService
+import dev.augu.nino.services.moderation.log.IModerationLogService
+import java.time.Instant
 import net.dv8tion.jda.api.Permission
 
-class ReasonCommand(private val cases: ICaseService): ModerationCommand(
+class ReasonCommand(private val caseService: ICaseService, private val logService: IModerationLogService): ModerationCommand(
     "reason",
     "Updates the reason of a specific case",
 
@@ -25,13 +27,18 @@ class ReasonCommand(private val cases: ICaseService): ModerationCommand(
             return
         }
 
-        val case = cases.getCase(args.caseID, ctx.guild!!.id)
+        val case = caseService.getCase(args.caseID, ctx.guild!!.id)
         if (case == null) {
             ctx.replyTranslate("reasonCommandNoCaseFound", mapOf("caseID" to args.caseID.toString()))
             return
         }
 
-        // fuck how do i update it in the db?
+        case.reason = args.reason
+        case.lastChangedAt = Instant.now()
+        case.lastModeratorId = ctx.author.id
+        caseService.updateCase(case)
+        logService.updateLog(case)
+
         ctx.replyTranslate("reasonCommandUpdated", mapOf(
             "reason" to args.reason,
             "caseID" to args.caseID.toString())

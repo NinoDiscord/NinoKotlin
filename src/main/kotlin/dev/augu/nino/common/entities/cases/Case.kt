@@ -42,7 +42,7 @@ sealed class Case {
 
     abstract var resolved: Boolean
 
-    abstract val id: Int
+    abstract val caseId: Int
 
     abstract var reason: String?
 
@@ -51,7 +51,7 @@ sealed class Case {
     @Contextual @SerialName("_id") abstract val mongoId: Id<Case>
 
     fun isChanged(): Boolean {
-        return lastModeratorId != null
+        return lastChangedAt != null
     }
 
     abstract fun isLogged(): Boolean
@@ -68,10 +68,10 @@ data class BanCase(
     @Contextual override var lastChangedAt: Instant?,
     override val guildId: String,
     override var resolved: Boolean,
-    override val id: Int,
+    override val caseId: Int,
     override var reason: String?,
     override var modLogMessageId: String?,
-    val time: Long?,
+    var time: Long?,
     val soft: Boolean,
     @Contextual @SerialName("_id") override val mongoId: Id<Case> = newId()
 ) : Case() {
@@ -83,7 +83,7 @@ data class BanCase(
         val koin = KoinContextHandler.get()
         return createCaseEmbedBuilder(this, koin.get()).apply {
             if (time != null) {
-                addField("Duration", formatDurationLong(Duration.ofMillis(time)), false)
+                addField("Duration", formatDurationLong(Duration.ofMillis(time!!)), false)
             }
         }.build()
     }
@@ -98,7 +98,7 @@ data class UnbanCase(
     @Contextual override var lastChangedAt: Instant?,
     override val guildId: String,
     override var resolved: Boolean,
-    override val id: Int,
+    override val caseId: Int,
     override var reason: String?,
     override var modLogMessageId: String?,
     @Contextual @SerialName("_id") override val mongoId: Id<Case> = newId()
@@ -122,10 +122,10 @@ data class MuteCase(
     @Contextual override var lastChangedAt: Instant?,
     override val guildId: String,
     override var resolved: Boolean,
-    override val id: Int,
+    override val caseId: Int,
     override var reason: String?,
     override var modLogMessageId: String?,
-    val time: Long?,
+    var time: Long?,
     @Contextual @SerialName("_id") override val mongoId: Id<Case> = newId()
 ) : Case() {
     override val action = Action.MUTE
@@ -136,7 +136,7 @@ data class MuteCase(
         val koin = KoinContextHandler.get()
         return createCaseEmbedBuilder(this, koin.get()).apply {
             if (time != null) {
-                addField("Duration", formatDurationLong(Duration.ofMillis(time)), false)
+                addField("Duration", formatDurationLong(Duration.ofMillis(time!!)), false)
             }
         }.build()
     }
@@ -151,7 +151,7 @@ data class UnmuteCase(
     @Contextual override var lastChangedAt: Instant?,
     override val guildId: String,
     override var resolved: Boolean,
-    override val id: Int,
+    override val caseId: Int,
     override var reason: String?,
     override var modLogMessageId: String?,
     @Contextual @SerialName("_id") override val mongoId: Id<Case> = newId()
@@ -175,7 +175,7 @@ data class KickCase(
     @Contextual override var lastChangedAt: Instant?,
     override val guildId: String,
     override var resolved: Boolean,
-    override val id: Int,
+    override val caseId: Int,
     override var reason: String?,
     override var modLogMessageId: String?,
     @Contextual @SerialName("_id") override val mongoId: Id<Case> = newId()
@@ -193,13 +193,13 @@ data class KickCase(
 private suspend fun createCaseEmbedBuilder(case: Case, discordService: IDiscordService): EmbedBuilder {
     val targetUser = discordService.extractUserFromId(case.targetUserId)
     val initialModerator = discordService.extractUserFromId(case.initialModeratorId)
-    val lastModerator = if (case.isChanged()) discordService.extractUserFromId(case.lastModeratorId!!) else null
+    val lastModerator = if (case.lastModeratorId != null) discordService.extractUserFromId(case.lastModeratorId!!) else null
 
     return createEmbed {
         setTitle(getCaseTitle(case))
         setColor(getCaseColor(case))
         addField("User", getUserDisplay(targetUser, case.targetUserId), false)
-        if (case.isChanged() && case.initialModeratorId != case.lastModeratorId) {
+        if (case.lastModeratorId != null && case.initialModeratorId != case.lastModeratorId) {
             addField("Initial Moderator", getUserDisplay(initialModerator, case.initialModeratorId), false)
             addField("Current Moderator", getUserDisplay(lastModerator, case.lastModeratorId!!), false)
         } else {
@@ -214,9 +214,9 @@ private suspend fun createCaseEmbedBuilder(case: Case, discordService: IDiscordS
 
 private fun getCaseTitle(case: Case): String {
     return if (case.resolved) {
-        "Case #${case.id} - ${getCaseTitleAction(case)} (Resolved)"
+        "Case #${case.caseId} - ${getCaseTitleAction(case)} (Resolved)"
     } else {
-        "Case #${case.id} - ${getCaseTitleAction(case)}"
+        "Case #${case.caseId} - ${getCaseTitleAction(case)}"
     }
 }
 
