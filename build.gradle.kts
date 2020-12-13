@@ -61,7 +61,7 @@ dependencies {
     // Testing tools
     testImplementation("junit:junit:4.13.1")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:4.3.1")
-    testImplementation("io.kotest:kotest-assertions-core-jvm:4.3.1")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:4.3.2")
     testImplementation("io.kotest:kotest-property-jvm:4.3.1")
     testImplementation("io.mockk:mockk:1.10.3")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
