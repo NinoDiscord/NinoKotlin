@@ -6,17 +6,8 @@ contributors:
   - "dondish#8071"
   - "August#5820"
 translations:
-  # Constants
   unableToFindUser: "Unable to find a user with the Discord ID: ${userId}"
   unableToFindMember: "Unable to find a member in this guild with the Discord ID: ${memberId}"
-
-  # Commands
-  helpCommandEmbedTitle: "[ ${user} | Commands List ]"
-  helpCommandEmbedDescription: "To get documentation on a command or module, run `${prefix}help [command|module]`, example: `${prefix}help ban` or `${prefix}help generic`.\n\n• Available Commands: **${commandSize}\n• More information can be found [here](${websiteUrl})"
-  helpCommandEmbedFieldName: "• ${category} [${commands}]"
-  helpCommandModuleEmbedTitle: "[ Module ${module} ]"
-
-  # Commands
   pingCommandOldMessage: "Calculating..."
   pingCommandNewMessage: "Shard ${id}: WS - ${shard}ms, Latency: ${messageLatency}ms"
   banCommandInvalidArguments: "Invalid Arguments.\nCorrect usage: `${prefix}ban <user id or mention> <reason> | <time>`\nTime is optional."
