@@ -11,21 +11,20 @@ class LogEventListenerService(val jda: JDA): ILogEventListenerService {
     private val logger by logging(this::class.java)
 
     init {
-        // TODO: make this cleaner with private properties
+        jda.on<MessageBulkDeleteEvent>().subscribe(this::onMessageDeleteBulk)
+        jda.on<MessageDeleteEvent>().subscribe(this::onMessageDelete)
+        jda.on<MessageUpdateEvent>().subscribe(this::onMessageUpdate)
+    }
 
-        logger.info("test")
+    override fun onMessageDeleteBulk(event: MessageBulkDeleteEvent) {
+        logger.debug("some event that is named onMessageDeleteBulk?")
+    }
 
-        jda.on<MessageDeleteEvent>().subscribe {
-            // TODO: cache messages
-        }
+    override fun onMessageDelete(event: MessageDeleteEvent) {
+        logger.debug("some event that is named onMessageDelete?")
+    }
 
-        jda.on<MessageBulkDeleteEvent>().subscribe {
-            // TODO: cache messages
-        }
-
-        jda.on<MessageUpdateEvent>().subscribe { event ->
-            // TODO: cache messages
-            logger.info("received updated message: ${event.message.contentRaw}")
-        }
+    override fun onMessageUpdate(event: MessageUpdateEvent) {
+        logger.info("received updated message: ${event.message.contentRaw}")
     }
 }
