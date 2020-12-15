@@ -10,7 +10,7 @@ import dev.augu.nino.common.modules.commonModules
 import dev.augu.nino.common.util.createThread
 import dev.augu.nino.configuration.Configuration
 import dev.augu.nino.configuration.configurationModule
-import dev.augu.nino.services.logging.ILogEventListenerService
+import dev.augu.nino.services.logging.LogEventListenerService
 import dev.augu.nino.services.scheduler.ISchedulerService
 import dev.augu.nino.services.serviceModule
 import java.io.File
@@ -53,7 +53,7 @@ class Bot: KoinComponent {
             client.addLanguage(I18nLanguage(it.name, it.translations))
         }
 
-        getKoin().get<ILogEventListenerService>() // get the event listener service and do it's thing
+        getKoin().get<LogEventListenerService>() // get the event listener service and do it's thing
 
         jda.on<ReadyEvent>().subscribe { event ->
             logger.info("Logged in as ${event.jda.selfUser.asTag} | ${event.guildTotalCount} Guilds (${event.guildUnavailableCount} unavailable)")
