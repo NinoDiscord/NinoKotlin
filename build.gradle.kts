@@ -29,7 +29,7 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.26.0")
 
     // Dependency Injection
-    implementation("org.koin:koin-core:2.1.6")
+    implementation("org.koin:koin-core:2.2.2")
 
     // JDA
     implementation("net.dv8tion:JDA:4.2.0_224") {
@@ -59,10 +59,10 @@ dependencies {
     liquibaseRuntime("javax.xml.bind", "jaxb-api", "2.3.1")
 
     // Testing tools
-    testImplementation("junit:junit:4.13.1")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:4.3.2")
     testImplementation("io.kotest:kotest-assertions-core-jvm:4.3.2")
     testImplementation("io.kotest:kotest-property-jvm:4.3.2")
+    testImplementation("io.kotest:kotest-extensions-koin-jvm:4.3.2")
     testImplementation("io.mockk:mockk:1.10.4")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
     testImplementation("org.koin:koin-test:2.2.2")

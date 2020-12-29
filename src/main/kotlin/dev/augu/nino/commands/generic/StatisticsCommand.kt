@@ -6,8 +6,8 @@ import dev.augu.nino.common.formatBytes
 import dev.augu.nino.common.humanize
 import dev.augu.nino.common.util.createEmbed
 import dev.augu.nino.services.discord.IDiscordService
-import net.dv8tion.jda.api.JDAInfo
 import java.lang.management.ManagementFactory
+import net.dv8tion.jda.api.JDAInfo
 
 class StatisticsCommand(private val discordService: IDiscordService): GenericCommand(
         "statistics",

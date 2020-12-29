@@ -5,7 +5,7 @@ import java.io.File
 import org.koin.dsl.module
 
 val localeModule = module {
-    factory<List<Locale>> {
+    factory {
         val directory = File(getPropertyOrNull("localeDirectory") ?: "locales")
         if (!directory.exists() || !directory.isDirectory) {
             return@factory arrayListOf<Locale>()

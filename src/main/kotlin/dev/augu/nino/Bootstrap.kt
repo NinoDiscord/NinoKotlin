@@ -23,9 +23,9 @@ import net.dv8tion.jda.api.OnlineStatus
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.events.DisconnectEvent
 import net.dv8tion.jda.api.events.ReadyEvent
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.context.startKoin
-import org.koin.core.inject
 import org.slf4j.LoggerFactory
 
 class Bot: KoinComponent {
@@ -109,7 +109,7 @@ object Bootstrap {
             }
 
             environmentProperties()
-            modules(*commonModules.toTypedArray(), *commandModules.toTypedArray(), serviceModule, configurationModule)
+            modules(*(commonModules + commandModules + serviceModule + configurationModule).toTypedArray())
         }
 
         val bot = Bot()

@@ -23,12 +23,15 @@ import dev.augu.nino.services.settings.GuildSettingsService
 import dev.augu.nino.services.settings.IGuildSettingsService
 import org.koin.dsl.module
 
-val serviceModule = module {
+val discordServiceModule = module {
+    single<IDiscordService> { DiscordService(get()) }
+}
+
+val baseServiceModule = module {
     single<ILocaleService> { LocaleService(get(), get()) }
     single<IRedisService> { RedisService(get()) }
     single<IPostgresService> { PostgresService(get()) }
     single<IModerationService> { ModerationService(get(), get(), get()) }
-    single<IDiscordService> { DiscordService(get()) }
     single<IGuildSettingsService> { GuildSettingsService(get(), get(), get()) }
     single<IMongoService> { MongoService(get()) }
     single<ISchedulerService> { SchedulerService(get()) }
@@ -36,3 +39,5 @@ val serviceModule = module {
     single<IModerationLogService> { ModerationLogService(get(), get()) }
     single { LogEventListenerService(get()) }
 }
+
+val serviceModule = baseServiceModule + discordServiceModule
