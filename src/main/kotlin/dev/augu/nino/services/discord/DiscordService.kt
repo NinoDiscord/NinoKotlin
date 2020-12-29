@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.Role
+import net.dv8tion.jda.api.entities.SelfUser
+import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.entities.User
 import net.dv8tion.jda.api.exceptions.ErrorResponseException
 import net.dv8tion.jda.api.requests.ErrorResponse
@@ -16,8 +18,39 @@ private val SNOWFLAKE_REGEX = Regex("(?:<@!?)?(\\d+)(?:>)?")
 
 class DiscordService(private val jda: JDA) : IDiscordService {
 
+    override val selfUser: SelfUser
+        get() = jda.selfUser
+
+    override val guildCount: Long
+        get() = jda.guildCache.size()
+
+    override val userCount: Long
+        get() = jda.userCache.size()
+
+    override val channelCount: Long
+        get() = jda.textChannelCache.size() + jda.voiceChannelCache.size()
+
+    override val gatewayPing: Long
+        get() = jda.gatewayPing
+
+    override fun getShardInfo(shardId: Int): JDA.ShardInfo {
+        return jda.shardManager?.getShardById(shardId)?.shardInfo ?: jda.shardInfo
+    }
+
     override fun extractSnowflake(text: String): String? {
         return SNOWFLAKE_REGEX.find(text)?.groupValues?.get(1)
+    }
+
+    override fun extractGuildFromId(guildId: String): Guild? {
+        return jda.getGuildById(guildId)
+    }
+
+    override fun extractTextChannelFromId(textChannelId: String): TextChannel? {
+        return jda.getTextChannelById(textChannelId)
+    }
+
+    override fun extractRoleFromId(roleId: String): Role? {
+        return jda.getRoleById(roleId)
     }
 
     override suspend fun extractMemberFromId(memberId: String, guild: Guild): Member? {

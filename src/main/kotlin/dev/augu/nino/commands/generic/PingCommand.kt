@@ -3,10 +3,10 @@ package dev.augu.nino.commands.generic
 import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.butterfly.util.edit
 import dev.augu.nino.common.entities.GenericCommand
+import dev.augu.nino.services.discord.IDiscordService
 import java.time.temporal.ChronoUnit
-import net.dv8tion.jda.api.JDA
 
-class PingCommand(private val jda: JDA): GenericCommand(
+class PingCommand(private val discordService: IDiscordService): GenericCommand(
         "ping",
         "Shows the bot's latency with Discord",
         "pong", "pang"
@@ -15,9 +15,9 @@ class PingCommand(private val jda: JDA): GenericCommand(
         val startedAt = ctx.message.timeCreated.toInstant()
         val msg = ctx.replyTranslate("pingCommandOldMessage")
 
-        val gatewayPing = jda.gatewayPing
+        val gatewayPing = discordService.gatewayPing
         msg.edit(ctx.language()!!.translate("pingCommandNewMessage", mapOf(
-                "id" to jda.shardInfo.shardId.toString(),
+                "id" to "0", // it's not sharded as of now anyways
                 "shard" to gatewayPing.toString(),
                 "messageLatency" to startedAt.until(msg.timeCreated.toInstant(), ChronoUnit.MILLIS).toString()
         )))

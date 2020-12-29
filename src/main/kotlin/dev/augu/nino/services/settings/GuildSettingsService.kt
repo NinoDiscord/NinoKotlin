@@ -8,15 +8,15 @@ import dev.augu.nino.common.entities.database.ModLogSettings
 import dev.augu.nino.common.entities.database.ModLogSettingsTable
 import dev.augu.nino.common.entities.database.MutedRole
 import dev.augu.nino.common.entities.database.MutedRoles
+import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.postgres.IPostgresService
-import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.entities.Role
 import net.dv8tion.jda.api.entities.TextChannel
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class GuildSettingsService(
-    private val jda: JDA,
+    private val discordService: IDiscordService,
     private val postgresService: IPostgresService,
     private val localeService: ILocaleService
 ) : IGuildSettingsService {
@@ -39,7 +39,7 @@ class GuildSettingsService(
                     .find { ModLogSettingsTable.guildID eq guildId }
                     .firstOrNull()?.modLogChannel ?: return@transaction null
 
-            jda.getTextChannelById(channelID)
+            discordService.extractTextChannelFromId(channelID)
         }
 
     override fun setModLogChannel(channelId: String, guildId: String): Unit =
@@ -54,7 +54,7 @@ class GuildSettingsService(
         return transaction(postgresService.database) {
             val roleId = MutedRole.find { MutedRoles.guildId eq guildId }.firstOrNull()?.mutedRoleId
                     ?: return@transaction null
-            jda.getRoleById(roleId)
+            discordService.extractRoleFromId(roleId)
         }
     }
 

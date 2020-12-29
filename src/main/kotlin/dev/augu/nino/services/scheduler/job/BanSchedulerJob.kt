@@ -2,16 +2,16 @@ package dev.augu.nino.services.scheduler.job
 
 import dev.augu.nino.common.entities.Action
 import dev.augu.nino.services.cases.ICaseService
+import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
 import dev.augu.nino.services.moderation.log.IModerationLogService
-import java.time.Instant
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import net.dv8tion.jda.api.JDA
 import org.koin.core.context.KoinContextHandler
 import org.litote.kmongo.Id
 import org.litote.kmongo.newId
+import java.time.Instant
 
 @Serializable
 data class BanSchedulerJob(
@@ -27,14 +27,14 @@ data class BanSchedulerJob(
 
     override suspend fun processJob() {
         val koin = KoinContextHandler.get()
-        val jda = koin.get<JDA>()
-        val guild = jda.getGuildById(guildId) ?: return
+        val discordService = koin.get<IDiscordService>()
+        val guild = discordService.extractGuildFromId(guildId) ?: return
 
         val moderationService = koin.get<IModerationService>()
 
         moderationService.ban(targetUserId, guild, reason, delDays)
 
-        val case = koin.get<ICaseService>().createBanCase(targetUserId, jda.selfUser.id, null, Instant.now(), null, guildId, false, reason, null, null, false)
+        val case = koin.get<ICaseService>().createBanCase(targetUserId, discordService.selfUser.id, null, Instant.now(), null, guildId, false, reason, null, null, false)
         koin.get<IModerationLogService>().log(case)
     }
 }

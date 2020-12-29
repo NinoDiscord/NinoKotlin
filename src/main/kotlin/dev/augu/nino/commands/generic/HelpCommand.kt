@@ -6,11 +6,12 @@ import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.common.entities.GenericCommand
 import dev.augu.nino.common.entities.NinoGuildSettings
 import dev.augu.nino.common.util.createEmbed
+import dev.augu.nino.services.discord.IDiscordService
 import net.dv8tion.jda.api.Permission
 
-class HelpCommand(private val client: ButterflyClient): GenericCommand(
+class HelpCommand(private val client: ButterflyClient, private val discordService: IDiscordService): GenericCommand(
         "help",
-        "Gives a list of ${client.jda.selfUser.asTag}'s commands or shows documentation on a specific command or module",
+        "Gives a list of ${discordService.selfUser.asTag}'s commands or shows documentation on a specific command or module",
         "halp", "h", "cmds", "commands", "?"
 ) {
     override suspend fun execute(ctx: CommandContext) {
@@ -77,7 +78,7 @@ class HelpCommand(private val client: ButterflyClient): GenericCommand(
         }
 
         val embed = createEmbed {
-            setTitle("${client.jda.selfUser.asTag} | Commands List")
+            setTitle("${discordService.selfUser.asTag} | Commands List")
             setDescription("More documentation on a command is available on the [website](https://nino.augu.dev)!")
             setFooter("To get extra documentation, run \"${prefix}help [command]\" | ${commands.size} Commands Available")
         }
