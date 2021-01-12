@@ -39,7 +39,7 @@ dependencies {
     implementation("dev.augu.nino:Butterfly:0.3.5")
 
     // Redis
-    implementation("io.lettuce:lettuce-core:6.0.1.RELEASE")
+    implementation("io.lettuce:lettuce-core:6.0.2.RELEASE")
 
     // Postgres
     implementation("org.postgresql:postgresql:42.2.18")
