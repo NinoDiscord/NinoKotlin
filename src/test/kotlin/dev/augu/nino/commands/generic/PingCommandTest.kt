@@ -18,7 +18,6 @@ import org.koin.core.component.inject
 import java.time.Instant
 import java.time.ZoneOffset
 
-
 @ExperimentalCoroutinesApi
 class PingCommandTest : KoinDescribeSpec() {
 
