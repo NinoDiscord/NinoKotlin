@@ -148,7 +148,7 @@ spotless {
                         "no-unit-return" to "true",
 
                         // Disable the wildcards import and colon spacing rule
-                        "disabled_rules" to "no-wildcard-imports,colon-spacing",
+                        "disabled_rules" to "no-wildcard-imports,colon-spacing,import-ordering",
 
                         // Set the indent size to 4
                         "indent_size" to "4"
