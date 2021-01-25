@@ -7,7 +7,6 @@ import dev.augu.nino.butterfly.i18n.I18nLanguage
 import dev.augu.nino.common.entities.Locale
 import dev.augu.nino.common.util.createThread
 import dev.augu.nino.configuration.Configuration
-import dev.augu.nino.services.logging.LogEventListenerService
 import dev.augu.nino.services.scheduler.ISchedulerService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.asCoroutineDispatcher
@@ -48,8 +47,6 @@ class BotComponent: KoinComponent {
             logger.info("Loaded Locale: ${it.name} ${if (it.code == config.base.defaultLanguage) "(Default)" else ""}")
             client.addLanguage(I18nLanguage(it.name, it.translations))
         }
-
-        getKoin().get<LogEventListenerService>() // get the event listener service and do it's thing
 
         jda.on<ReadyEvent>().subscribe { event ->
             logger.info("Logged in as ${event.jda.selfUser.asTag} | ${event.guildTotalCount} Guilds (${event.guildUnavailableCount} unavailable)")

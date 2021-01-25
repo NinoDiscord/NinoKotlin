@@ -3,6 +3,7 @@ package dev.augu.nino
 import dev.augu.nino.commands.commandModules
 import dev.augu.nino.common.modules.commonModules
 import dev.augu.nino.components.BotComponent
+import dev.augu.nino.components.EventLogComponent
 import dev.augu.nino.configuration.configurationModule
 import dev.augu.nino.services.serviceModule
 import org.koin.core.component.KoinApiExtension
@@ -24,5 +25,8 @@ object Bootstrap {
 
         val bot = BotComponent()
         bot.start()
+
+        val eventLog = EventLogComponent()
+        eventLog.start()
     }
 }

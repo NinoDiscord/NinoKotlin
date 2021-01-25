@@ -6,7 +6,6 @@ import dev.augu.nino.services.discord.DiscordService
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.locale.ILocaleService
 import dev.augu.nino.services.locale.LocaleService
-import dev.augu.nino.services.logging.LogEventListenerService
 import dev.augu.nino.services.moderation.IModerationService
 import dev.augu.nino.services.moderation.ModerationService
 import dev.augu.nino.services.moderation.log.IModerationLogService
@@ -37,7 +36,6 @@ val baseServiceModule = module {
     single<ISchedulerService> { SchedulerService(get()) }
     single<ICaseService> { CaseService(get(), get()) }
     single<IModerationLogService> { ModerationLogService(get(), get()) }
-    single { LogEventListenerService(get()) }
 }
 
 val serviceModule = baseServiceModule + discordServiceModule
