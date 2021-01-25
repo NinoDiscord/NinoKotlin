@@ -4,38 +4,37 @@ import dev.augu.nino.butterfly.command.CommandContext
 import dev.augu.nino.butterfly.i18n.I18nLanguage
 import dev.augu.nino.butterfly.util.edit
 import dev.augu.nino.services.discord.IDiscordService
-import dev.augu.nino.testutils.testModule
-import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.koin.KoinListener
+import dev.augu.nino.testutils.KoinDescribeSpec
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.spyk
-import java.time.Instant
-import java.time.ZoneOffset
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import net.dv8tion.jda.api.entities.Message
 import org.koin.core.component.inject
-import org.koin.test.KoinTest
+import java.time.Instant
+import java.time.ZoneOffset
+
 
 @ExperimentalCoroutinesApi
-class PingCommandTest : DescribeSpec(), KoinTest {
+class PingCommandTest : KoinDescribeSpec() {
+
+    private val discordService by inject<IDiscordService>()
 
     init {
-        listener(KoinListener(testModule))
-    }
-
-    init {
-        val discordService by inject<IDiscordService>()
         describe("Integration Tests - Ping Command") {
-            val cmd = spyk(PingCommand(discordService))
+            var cmd: PingCommand? = null
             val language = I18nLanguage("", mapOf(
                     "pingCommandOldMessage" to "Calculating...",
                     "pingCommandNewMessage" to "Shard \${id} | Ping: \${messageLatency}ms | Websocket: \${shard}ms"
             ))
+
+            beforeAny {
+                cmd = spyk(PingCommand(discordService))
+            }
 
             it("should print the latency") {
                 val ctx = mockk<CommandContext>()
@@ -55,7 +54,7 @@ class PingCommandTest : DescribeSpec(), KoinTest {
                 coEvery { sampleMsg.edit(any<CharSequence>()) } returns nextMsg
 
                 runBlocking {
-                    cmd.execute(ctx)
+                    cmd?.execute(ctx)
                 }
 
                 coVerify {

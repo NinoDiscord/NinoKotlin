@@ -5,14 +5,14 @@ import dev.augu.nino.services.cases.ICaseService
 import dev.augu.nino.services.discord.IDiscordService
 import dev.augu.nino.services.moderation.IModerationService
 import dev.augu.nino.services.moderation.log.IModerationLogService
-import java.time.Instant
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
-import org.koin.core.context.KoinContextHandler
+import org.koin.core.context.GlobalContext
 import org.litote.kmongo.Id
 import org.litote.kmongo.newId
+import java.time.Instant
 
 @Serializable
 class UnmuteSchedulerJob(
@@ -26,7 +26,7 @@ class UnmuteSchedulerJob(
     override val action: Action = Action.UNMUTE
 
     override suspend fun processJob() {
-        val koin = KoinContextHandler.get()
+        val koin = GlobalContext.get()
         val discordService = koin.get<IDiscordService>()
         val guild = discordService.extractGuildFromId(guildId) ?: return
 

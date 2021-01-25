@@ -5,19 +5,19 @@ import dev.augu.nino.common.util.createEmbed
 import dev.augu.nino.common.util.formatDateLong
 import dev.augu.nino.common.util.formatDurationLong
 import dev.augu.nino.services.discord.IDiscordService
-import java.awt.Color
-import java.time.Duration
-import java.time.Instant
-import java.time.ZoneOffset
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.User
-import org.koin.core.context.KoinContextHandler
+import org.koin.core.context.GlobalContext
 import org.litote.kmongo.Id
 import org.litote.kmongo.newId
+import java.awt.Color
+import java.time.Duration
+import java.time.Instant
+import java.time.ZoneOffset
 
 @Serializable
 sealed class Case {
@@ -80,7 +80,7 @@ data class BanCase(
     override fun isLogged(): Boolean = true
 
     override suspend fun toEmbed(): MessageEmbed {
-        val koin = KoinContextHandler.get()
+        val koin = GlobalContext.get()
         return createCaseEmbedBuilder(this, koin.get()).apply {
             if (time != null) {
                 addField("Duration", formatDurationLong(Duration.ofMillis(time!!)), false)
@@ -108,7 +108,7 @@ data class UnbanCase(
     override fun isLogged(): Boolean = true
 
     override suspend fun toEmbed(): MessageEmbed {
-        val koin = KoinContextHandler.get()
+        val koin = GlobalContext.get()
         return createCaseEmbedBuilder(this, koin.get()).build()
     }
 }
@@ -133,7 +133,7 @@ data class MuteCase(
     override fun isLogged(): Boolean = true
 
     override suspend fun toEmbed(): MessageEmbed {
-        val koin = KoinContextHandler.get()
+        val koin = GlobalContext.get()
         return createCaseEmbedBuilder(this, koin.get()).apply {
             if (time != null) {
                 addField("Duration", formatDurationLong(Duration.ofMillis(time!!)), false)
@@ -161,7 +161,7 @@ data class UnmuteCase(
     override fun isLogged(): Boolean = true
 
     override suspend fun toEmbed(): MessageEmbed {
-        val koin = KoinContextHandler.get()
+        val koin = GlobalContext.get()
         return createCaseEmbedBuilder(this, koin.get()).build()
     }
 }
@@ -185,7 +185,7 @@ data class KickCase(
     override fun isLogged(): Boolean = true
 
     override suspend fun toEmbed(): MessageEmbed {
-        val koin = KoinContextHandler.get()
+        val koin = GlobalContext.get()
         return createCaseEmbedBuilder(this, koin.get()).build()
     }
 }
