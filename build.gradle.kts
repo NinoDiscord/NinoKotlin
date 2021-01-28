@@ -30,6 +30,7 @@ dependencies {
 
     // Dependency Injection
     implementation("org.koin:koin-core:2.2.2")
+    implementation("org.koin:koin-ktor:2.2.2")
 
     // JDA
     implementation("net.dv8tion:JDA:4.2.0_225") {
@@ -70,6 +71,12 @@ dependencies {
     // Logging
     api("org.slf4j:slf4j-api:1.7.30")
     implementation("org.slf4j:slf4j-simple:1.7.30")
+
+    // Ktor libraries (Internal API)
+    implementation("io.ktor:ktor-client-serialization:1.5.0")
+    implementation("io.ktor:ktor-serialization:1.5.0")
+    implementation("io.ktor:ktor-server-netty:1.5.0")
+    implementation("io.ktor:ktor-server-core:1.5.0")
 }
 
 application {
@@ -112,6 +119,11 @@ tasks {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_11.toString()
         }
+    }
+
+    build {
+        dependsOn(shadowJar)
+        dependsOn(spotlessApply)
     }
 }
 

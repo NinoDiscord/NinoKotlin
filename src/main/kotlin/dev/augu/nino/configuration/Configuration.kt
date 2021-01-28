@@ -8,5 +8,7 @@ data class Configuration(
     val redis: RedisConfiguration,
     val postgres: PostgresConfiguration,
     val mongodb: MongoConfiguration,
-    val status: StatusConfig? = null
+    val status: StatusConfig? = null,
+    val api: APIConfiguration? = null,
+    val environment: Environment = Environment.Development
 )

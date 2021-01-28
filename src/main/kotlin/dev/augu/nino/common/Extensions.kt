@@ -1,5 +1,14 @@
 package dev.augu.nino.common
 
+import dev.augu.nino.configuration.configurationModule
+import dev.augu.nino.services.baseServiceModule
+import dev.augu.nino.services.discordServiceModule
+import io.ktor.application.*
+import io.ktor.features.*
+import io.ktor.http.*
+import io.ktor.serialization.*
+import org.koin.ktor.ext.Koin
+
 /**
  * Returns the humanized time for a [java.lang.Long] instance
  * @credit // Credit: https://github.com/DV8FromTheWorld/Yui/blob/master/src/main/java/net/dv8tion/discord/commands/UptimeCommand.java#L34
@@ -34,4 +43,24 @@ fun Long.formatBytes(): String {
     return if (kb < 1024L) "${kb}KB"
         else if (kb > 1024L && mb < 1024L) "${mb}MB"
         else "${gb}GB"
+}
+
+fun Application.module() {
+    install(Koin) {
+        // Register all modules we'll use in Koin for Ktor
+        modules(baseServiceModule, discordServiceModule, configurationModule)
+    }
+
+    install(ContentNegotiation) {
+        json(contentType = ContentType.parse("application/json"))
+    }
+
+    install(DefaultHeaders) {
+        header("X-Powered-By", "Nino (https://github.com/NinoDiscord/Nino)")
+    }
+
+    install(CORS) {
+        header(HttpHeaders.XForwardedProto)
+        anyHost()
+    }
 }

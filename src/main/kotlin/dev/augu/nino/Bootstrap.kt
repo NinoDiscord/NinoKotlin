@@ -2,6 +2,7 @@ package dev.augu.nino
 
 import dev.augu.nino.commands.commandModules
 import dev.augu.nino.common.modules.commonModules
+import dev.augu.nino.components.APIComponent
 import dev.augu.nino.components.BotComponent
 import dev.augu.nino.components.EventLogComponent
 import dev.augu.nino.configuration.configurationModule
@@ -28,5 +29,8 @@ object Bootstrap {
 
         val eventLog = EventLogComponent()
         eventLog.start()
+
+        val apiServer = APIComponent()
+        apiServer.start()
     }
 }
