@@ -1,13 +1,18 @@
 package dev.augu.nino.common
 
+import dev.augu.nino.api.Endpoint
+import dev.augu.nino.api.endpoints.endpointsModule
+import dev.augu.nino.commands.commandModules
+import dev.augu.nino.common.modules.commonModules
 import dev.augu.nino.configuration.configurationModule
-import dev.augu.nino.services.baseServiceModule
-import dev.augu.nino.services.discordServiceModule
+import dev.augu.nino.services.serviceModule
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
+import io.ktor.routing.*
 import io.ktor.serialization.*
 import org.koin.ktor.ext.Koin
+import java.io.File
 
 /**
  * Returns the humanized time for a [java.lang.Long] instance
@@ -46,9 +51,21 @@ fun Long.formatBytes(): String {
 }
 
 fun Application.module() {
+    // Modules are already registered, so?
     install(Koin) {
-        // Register all modules we'll use in Koin for Ktor
-        modules(baseServiceModule, discordServiceModule, configurationModule)
+        if (File("/etc/nino.properties").exists()) fileProperties("/etc/nino.properties")
+
+        environmentProperties()
+        modules(*(commonModules + commandModules + serviceModule + configurationModule + endpointsModule).toTypedArray())
+
+        val endpoints = koin.getAll<Endpoint>()
+        install(Routing) {
+            for (endpoint in endpoints) {
+                route(endpoint.path, endpoint.method) {
+                    handle { endpoint.run(call) }
+                }
+            }
+        }
     }
 
     install(ContentNegotiation) {
