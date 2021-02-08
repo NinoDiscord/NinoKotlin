@@ -47,7 +47,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:4.0.1")
     implementation("org.jetbrains.exposed:exposed-core:0.29.1")
     implementation("org.jetbrains.exposed:exposed-dao:0.28.1")
-    implementation("org.jetbrains.exposed:exposed-jdbc:0.28.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.29.1")
 
     // MongoDB
     implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.2.4")
