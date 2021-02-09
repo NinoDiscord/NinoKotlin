@@ -60,7 +60,7 @@ dependencies {
     liquibaseRuntime("javax.xml.bind", "jaxb-api", "2.3.1")
 
     // Testing tools
-    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.4.0")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.4.1")
     testImplementation("io.kotest:kotest-assertions-core-jvm:4.4.1")
     testImplementation("io.kotest:kotest-property-jvm:4.4.1")
     testImplementation("io.kotest:kotest-extensions-koin-jvm:4.4.1")
