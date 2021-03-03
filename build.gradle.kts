@@ -22,7 +22,7 @@ dependencies {
     // Kotlin
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.3")
 
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
