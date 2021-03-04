@@ -33,7 +33,7 @@ dependencies {
     implementation("org.koin:koin-ktor:2.2.2")
 
     // JDA
-    implementation("net.dv8tion:JDA:4.2.0_230") {
+    implementation("net.dv8tion:JDA:4.2.0_231") {
         exclude(module = "opus-java")
     }
     implementation("club.minnced:jda-reactor:1.2.0")
