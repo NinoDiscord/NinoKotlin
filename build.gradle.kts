@@ -65,7 +65,7 @@ dependencies {
     testImplementation("io.kotest:kotest-property-jvm:4.4.1")
     testImplementation("io.kotest:kotest-extensions-koin-jvm:4.4.1")
     testImplementation("io.mockk:mockk:1.10.6")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3")
     testImplementation("org.koin:koin-test:2.2.2")
 
     // Logging
